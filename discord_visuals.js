@@ -213,7 +213,7 @@ function Chart(_address) {
   }
   if (_address == "tyhjät") {
     address = 'data[id]["omistus"]["ES_tyhjät"]';
-    yksikkö = "Tölkit";
+    yksikkö = "tölkit";
   }
   if (_address == "annetut") {
     address = 'data[id]["omistus"]["annetut_rahat"]';
