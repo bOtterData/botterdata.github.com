@@ -249,7 +249,7 @@ function Chart(_address) {
   }
   if (_address == "KTEM-Voitot") {
     address = 'data[id]["pelit"]["KTEM_voitot"]';
-    yksikkö = "kpl";
+    yksikkö = "coins";
   }
   if (_address == "Ryhmäpeli W%") {
     address = '(data[id]["pelit"]["ryhmäpelivoitot"] * 100 / (data[id]["pelit"]["ryhmäpelit"] + 0.000001)).toFixed(2)';
@@ -269,7 +269,7 @@ function Chart(_address) {
   }
   if (_address == "KTEM-Häviöt") {
     address = 'data[id]["pelit"]["KTEM_häviöt"]';
-    yksikkö = "kpl";
+    yksikkö = "coins";
   }
   if (_address == "Ryhmäpelinetto") {
     address = 'data[id]["pelit"]["ryhmäpelivoitot_yht"] - data[id]["pelit"]["ryhmäpelihäviöt_yht"]';
