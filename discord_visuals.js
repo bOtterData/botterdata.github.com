@@ -66,11 +66,11 @@ function draw() {
   frameRate(60);
   background(50);
 
-  if (frameCount < 60) {
+  if (frameCount < 100) {
     return;
   }
 
-  if (frameCount == 60) {
+  if (frameCount == 100) {
     chart[0].create();
   }
 
