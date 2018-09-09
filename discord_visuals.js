@@ -10,7 +10,6 @@ var config = {
 
 firebase.initializeApp(config);
 
-
 let data = {};
 
 var database = firebase.database();
@@ -43,19 +42,25 @@ function setup() {
   buttons.push(new Button("KTEM-Pelit", width - 10 - 100*4, 10, 90, 20, [150, 150, 150], [0, 0, 0]));
   buttons.push(new Button("Ryhmäpelit", width - 10 - 100*3, 10, 90, 20, [150, 150, 150], [0, 0, 0]));
   buttons.push(new Button("Harpoon-Pelit", width - 10 - 100*2, 10, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Harpoon-Accuracy", width - 10 - 100, 10, 90, 20, [150, 150, 150], [0, 0, 0]));
+  buttons.push(new Button("Harpoon-Voitot", width - 10 - 100, 10, 90, 20, [150, 150, 150], [0, 0, 0]));
 
   buttons.push(new Button("Slot Voitetut", width - 10 - 100*5, 10 + 30, 90, 20, [150, 150, 150], [0, 0, 0]));
   buttons.push(new Button("KTEM-Voitot", width - 10 - 100*4, 10 + 30, 90, 20, [150, 150, 150], [0, 0, 0]));
   buttons.push(new Button("Ryhmäpeli W%", width - 10 - 100*3, 10 + 30, 90, 20, [150, 150, 150], [0, 0, 0]));
   buttons.push(new Button("Harpoon-Osumat", width - 10 - 100*2, 10 + 30, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Harpoon-Voitot", width - 10 - 100, 10 + 30, 90, 20, [150, 150, 150], [0, 0, 0]));
+  buttons.push(new Button("Harpoon-Hävityt", width - 10 - 100, 10 + 30, 90, 20, [150, 150, 150], [0, 0, 0]));
 
-  buttons.push(new Button("KTEM-Netto", width - 10 - 100*5, 70, 90, 20, [150, 150, 150], [0, 0, 0]));
+  buttons.push(new Button("Slot Häviöt", width - 10 - 100*5, 70, 90, 20, [150, 150, 150], [0, 0, 0]));
   buttons.push(new Button("KTEM-Häviöt", width - 10 - 100*4, 70, 90, 20, [150, 150, 150], [0, 0, 0]));
   buttons.push(new Button("Ryhmäpelinetto", width - 10 - 100*3, 70, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Harpoon-Netto", width - 10 - 100*2, 70, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Harpoon-Hävityt", width - 10 - 100, 70, 90, 20, [150, 150, 150], [0, 0, 0]));
+  buttons.push(new Button("Harpoon-Accuracy", width - 10 - 100*2, 70, 90, 20, [150, 150, 150], [0, 0, 0]));
+  buttons.push(new Button("Harpoon-Netto", width - 10 - 100, 70, 90, 20, [150, 150, 150], [0, 0, 0]));
+
+  buttons.push(new Button("Slot Netto", width - 10 - 100*5, 100, 90, 20, [150, 150, 150], [0, 0, 0]));
+  buttons.push(new Button("KTEM-Netto", width - 10 - 100*4, 100, 90, 20, [150, 150, 150], [0, 0, 0]));
+  buttons.push(new Button(" ", width - 10 - 100*3, 100, 90, 20, [150, 150, 150], [0, 0, 0]));
+  buttons.push(new Button(" ", width - 10 - 100*2, 100, 90, 20, [150, 150, 150], [0, 0, 0]));
+  buttons.push(new Button(" ", width - 10 - 100, 100, 90, 20, [150, 150, 150], [0, 0, 0]));
 
 
   chart.push(new Chart('rahat'));
@@ -184,7 +189,7 @@ function Bar(_id, _x, _y, _w, _h, _c1, _c2, _name, _value, _yksikkö) {
 function Chart(_address) {
 
   var address;
-  let top_bar = 70*3/2;
+  let top_bar = 70*4/2 - 10;
   let left_bar = 20;
   let right_bar = 20;
   let bottom_bar = 10;
@@ -281,6 +286,14 @@ function Chart(_address) {
   }
   if (_address == "Harpoon-Hävityt") {
     address = 'data[id]["pelit"]["harpoon_hävityt"]';
+    yksikkö = "coins";
+  }
+  if (_address == "Slot Häviöt") {
+    address = 'data[id]["pelit"]["slot_häviöt_yhteensä"]';
+    yksikkö = "coins";
+  }
+  if (_address == "Slot-Netto") {
+    address = 'data[id]["pelit"]["slot_voitot_yhteensä"] - data[id]["pelit"]["slot_häviöt_yhteensä"]';
     yksikkö = "coins";
   }
 
@@ -524,7 +537,7 @@ function mousePressed() {
     buttons[12].activated();
     chart = [];
     bars = {};
-    chart.push(new Chart('Harpoon-Accuracy'));
+    chart.push(new Chart('Harpoon-Voitot'));
     chart[0].create();
   }
   if (buttons[13].intersects(mouseX, mouseY)) {
@@ -574,7 +587,7 @@ function mousePressed() {
     buttons[17].activated();
     chart = [];
     bars = {};
-    chart.push(new Chart('Harpoon-Voitot'));
+    chart.push(new Chart('Harpoon-Hävityt'));
     chart[0].create();
   }
   if (buttons[18].intersects(mouseX, mouseY)) {
@@ -584,7 +597,7 @@ function mousePressed() {
     buttons[18].activated();
     chart = [];
     bars = {};
-    chart.push(new Chart('KTEM-Netto'));
+    chart.push(new Chart('Slot Häviöt'));
     chart[0].create();
   }
   if (buttons[19].intersects(mouseX, mouseY)) {
@@ -614,7 +627,7 @@ function mousePressed() {
     buttons[21].activated();
     chart = [];
     bars = {};
-    chart.push(new Chart('Harpoon-Netto'));
+    chart.push(new Chart('Harpoon-Accuracy'));
     chart[0].create();
   }
   if (buttons[22].intersects(mouseX, mouseY)) {
@@ -624,7 +637,27 @@ function mousePressed() {
     buttons[22].activated();
     chart = [];
     bars = {};
-    chart.push(new Chart('Harpoon-Hävityt'));
+    chart.push(new Chart('Harpoon-Netto'));
+    chart[0].create();
+  }
+  if (buttons[23].intersects(mouseX, mouseY)) {
+    for (let b of buttons) {
+      b.deactivated();
+    }
+    buttons[23].activated();
+    chart = [];
+    bars = {};
+    chart.push(new Chart('Slot-Netto'));
+    chart[0].create();
+  }
+  if (buttons[24].intersects(mouseX, mouseY)) {
+    for (let b of buttons) {
+      b.deactivated();
+    }
+    buttons[24].activated();
+    chart = [];
+    bars = {};
+    chart.push(new Chart('KTEM-Netto'));
     chart[0].create();
   }
 
