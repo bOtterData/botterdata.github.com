@@ -11,7 +11,7 @@ var config = {
 firebase.initializeApp(config);
 
 let data = {};
-
+let font;
 var database = firebase.database();
 var ref = database.ref('profiles');
 
@@ -22,58 +22,66 @@ let chart = [];
 
 function preload() {
   ref.on('value', gotData, errData);
+  font = loadFont("Whitney Medium.ttf");
 }
 
 function setup() {
+  textFont(font);
 
   createCanvas(900, 900);
   frameRate(60);
-  buttons.push(new Button("Rahat", 20, 10, 70, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Aktiivisuus", 30 + 70*1, 10, 70, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Peak", 40 + 70*2, 10, 70, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Perustulo", 50  + 70*3, 10, 70, 20, [150, 150, 150], [0, 0, 0]));
+  buttons.push(new Button("Rahat", 20, 10, 70, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("Aktiivisuus", 30 + 70*1, 10, 70, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("Peak", 40 + 70*2, 10, 70, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("Perustulo", 50  + 70*3, 10, 70, 20, [100, 100, 100], [200, 200, 200]));
 
-  buttons.push(new Button("ES", 20, 10 + 30, 70, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Tyhjät ES", 30 + 70*1, 10 + 30, 70, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Annetut", 40 + 70*2, 10 + 30, 70, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Saadut", 50 + 70*3, 10 + 30, 70, 20, [150, 150, 150], [0, 0, 0]));
+  buttons.push(new Button("ES", 20, 10 + 30, 70, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("Tyhjät ES", 30 + 70*1, 10 + 30, 70, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("Annetut", 40 + 70*2, 10 + 30, 70, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("Saadut", 50 + 70*3, 10 + 30, 70, 20, [100, 100, 100], [200, 200, 200]));
 
-  buttons.push(new Button("Slot-Pelit", width - 10 - 100*5, 10, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("KTEM-Pelit", width - 10 - 100*4, 10, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Ryhmäpelit", width - 10 - 100*3, 10, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Harpoon-Pelit", width - 10 - 100*2, 10, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Harpoon-Voitot", width - 10 - 100, 10, 90, 20, [150, 150, 150], [0, 0, 0]));
+  buttons.push(new Button("Slot-Pelit", width - 10 - 100*5, 10, 90, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("KTEM-Pelit", width - 10 - 100*4, 10, 90, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("Ryhmäpelit", width - 10 - 100*3, 10, 90, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("Harpoon-Pelit", width - 10 - 100*2, 10, 90, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("Harpoon-Voitot", width - 10 - 100, 10, 90, 20, [100, 100, 100], [200, 200, 200]));
 
-  buttons.push(new Button("Slot Voitetut", width - 10 - 100*5, 10 + 30, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("KTEM-Voitot", width - 10 - 100*4, 10 + 30, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Ryhmäpeli W%", width - 10 - 100*3, 10 + 30, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Harpoon-Osumat", width - 10 - 100*2, 10 + 30, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Harpoon-Hävityt", width - 10 - 100, 10 + 30, 90, 20, [150, 150, 150], [0, 0, 0]));
+  buttons.push(new Button("Slot-Voitot", width - 10 - 100*5, 10 + 30, 90, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("KTEM-Voitot", width - 10 - 100*4, 10 + 30, 90, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("Ryhmäpeli W%", width - 10 - 100*3, 10 + 30, 90, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("Harpoon-Osumat", width - 10 - 100*2, 10 + 30, 90, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("Harpoon-Hävityt", width - 10 - 100, 10 + 30, 90, 20, [100, 100, 100], [200, 200, 200]));
 
-  buttons.push(new Button("Slot Häviöt", width - 10 - 100*5, 70, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("KTEM-Häviöt", width - 10 - 100*4, 70, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Ryhmäpelinetto", width - 10 - 100*3, 70, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Harpoon-Accuracy", width - 10 - 100*2, 70, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("Harpoon-Netto", width - 10 - 100, 70, 90, 20, [150, 150, 150], [0, 0, 0]));
+  buttons.push(new Button("Slot-Häviöt", width - 10 - 100*5, 70, 90, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("KTEM-Häviöt", width - 10 - 100*4, 70, 90, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("Ryhmäpelinetto", width - 10 - 100*3, 70, 90, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("Harpoon-Acc", width - 10 - 100*2, 70, 90, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("Harpoon-Netto", width - 10 - 100, 70, 90, 20, [100, 100, 100], [200, 200, 200]));
 
-  buttons.push(new Button("Slot Netto", width - 10 - 100*5, 100, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button("KTEM-Netto", width - 10 - 100*4, 100, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button(" ", width - 10 - 100*3, 100, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button(" ", width - 10 - 100*2, 100, 90, 20, [150, 150, 150], [0, 0, 0]));
-  buttons.push(new Button(" ", width - 10 - 100, 100, 90, 20, [150, 150, 150], [0, 0, 0]));
+  buttons.push(new Button("Slot-Netto", width - 10 - 100*5, 100, 90, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button("KTEM-Netto", width - 10 - 100*4, 100, 90, 20, [100, 100, 100], [200, 200, 200]));
+  buttons.push(new Button(" ", width - 10 - 100*3, 100, 90, 20, [40, 40, 40], [200, 200, 200]));
+  buttons.push(new Button(" ", width - 10 - 100*2, 100, 90, 20, [40, 40, 40], [200, 200, 200]));
+  buttons.push(new Button(" ", width - 10 - 100, 100, 90, 20, [40, 40, 40], [200, 200, 200]));
 
 
   chart.push(new Chart('rahat'));
+  buttons[0].activated();
 
 }
 
 function draw() {
   frameRate(60);
-  background(50);
+  background(45);
 
-  if (frameCount < 100) {
+  if (frameCount < 120) {
     return;
   }
+
+  fill(40);
+  noStroke();
+  rect(60 + 70*4, 10, (width - 20 - 100*5) - (60  + 70*4), 30*4 - 10, 3, 3, 3, 3);
+
 
   if (frameCount == 100) {
     chart[0].create();
@@ -121,12 +129,12 @@ function Button( _text,  _x,  _y,  _w,  _h,  _c1,  _c2) {
     rect(this.x, this.y, this.w, this.h, 3, 3, 3, 3);
     fill(this.c2);
     textAlign(CENTER, CENTER);
-    textSize(10);
-    text(this.text, this.x + this.w/2, this.y + this.h/2);
+    textSize(11.5);
+    text(this.text, this.x + this.w/2 , this.y + this.h/2 + this.h/5.2);
   }
 
   this.activated = function() {
-    this.c1 = [55, 180, 225];
+    this.c1 = [50, 100, 100];
   }
 
   this.deactivated = function() {
@@ -155,17 +163,21 @@ function Bar(_id, _x, _y, _w, _h, _c1, _c2, _name, _value, _yksikkö) {
 
     if (this.w_n != this.w) {
       this.update();
-    }
 
+    }
+    opacity = map(this.w_n, 0, this.w, 0, 235);
     this.h = constrain(this.h, 0, 100);
 
+    fill(40);
+    rect(this.x, this.y, width - 40, this.h, 0, this.h/10, this.h/10, 0);
+
     fill(this.c1);
-    rect(this.x, this.y, Math.floor(this.w_n), this.h, 0, this.h/10, this.h/10, 0);
-    opacity = map(this.w_n, 0, this.w, 0, 255);
-    fill(this.c2, opacity);
+    rect(this.x, this.y, Math.floor(this.w_n), this.h, this.h/10, this.h/10, this.h/10, this.h/10);
+
+    fill(this.c2[0], opacity);
     textAlign(LEFT, CENTER);
-    textSize(this.h - this.h/2);
-    text(this.name + " (" + this.value + " " + yksikkö + ")", this.x + width/100, this.y + this.h/2);
+    textSize(this.h - this.h/3);
+    text(this.name + " (" + this.value + " " + yksikkö + ")", this.x + this.h/3, this.y + this.h/2 + this.h/4.5);
 
   }
 
@@ -193,7 +205,7 @@ function Chart(_address) {
   let left_bar = 20;
   let right_bar = 20;
   let bottom_bar = 10;
-  let space_between = 5;
+  let space_between = 8;
   let lenitems = 0;
 
   if (_address == "rahat") {
@@ -323,7 +335,16 @@ function Chart(_address) {
 
     let space = floor((height - top_bar - bottom_bar) / items.length);
     space = constrain(space, 0 , 100);
-    let maxi = items[0][1];
+    let suurin = items[0][1];
+    let pienin = items[items.length-1][1];
+
+    let maxi;
+    if (Math.abs(pienin) > suurin) {
+       maxi = Math.abs(pienin);
+    } else {
+       maxi = suurin;
+    }
+
 
     let count = 0;
     lenitems = items.length;
@@ -342,8 +363,6 @@ function Chart(_address) {
 
       count++;
     }
-
-    console.log(bars);
 
   }
 
@@ -377,7 +396,15 @@ function Chart(_address) {
 
     let space = floor((height - top_bar - bottom_bar) / items.length);
     space = constrain(space, 0 , 100);
-    let maxi = items[0][1];
+    let suurin = items[0][1];
+    let pienin = items[items.length-1][1];
+
+    let maxi;
+    if (Math.abs(pienin) > suurin) {
+       maxi = Math.abs(pienin);
+    } else {
+       maxi = suurin;
+    }
 
     let count = 0;
     for (var i of items) {
