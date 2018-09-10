@@ -201,7 +201,7 @@ function Bar(_id, _x, _y, _w, _h, _c1, _c2, _name, _value, _yksikkö) {
 function Chart(_address) {
 
   var address;
-  let top_bar = 70*4/2 - 10;
+  let top_bar = 70*4/2;
   let left_bar = 20;
   let right_bar = 20;
   let bottom_bar = 10;
