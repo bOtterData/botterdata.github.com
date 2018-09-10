@@ -357,6 +357,11 @@ function Chart(_address) {
       _c1 = [100, 100, 100];
       _c2 = [200, 200, 200];
       _value = i[1];
+
+      if (_value < 0) {
+        _c1 = [255, 60, 60];
+      }
+
       _name = data[i[0]]["nimi"];
 
       bars[i[0]].set(_x, _y, _w, _h, _c1, _c2, _value, _name);
