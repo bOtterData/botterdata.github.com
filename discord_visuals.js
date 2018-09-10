@@ -707,9 +707,9 @@ function OverAllGames() {
     ["Kaikki häviöt", "coins", all_loses],
     ["Netto", "coins", netto],
     ["Palautus-%", "%", palatutsp],
-    ["Voittojen osuus - Slot:", "%", s_pp],
-    ["Voittojen osuus - KTEM:", "%", k_pp],
-    ["Voittojen osuus - Harpoon:", "%", h_pp],
+    ["Voittojen osuus - Slot", "%", s_pp],
+    ["Voittojen osuus - KTEM", "%", k_pp],
+    ["Voittojen osuus - Harpoon", "%", h_pp],
 
   ];
 
