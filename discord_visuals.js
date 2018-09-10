@@ -910,12 +910,12 @@ function SlotChart() {
     ["Netto", "coins", netto1],
     ["Palautus-%", "%", palautus.toFixed(2)],
     ["3 x Poggers", "kpl", poggers3],
+    ["3 x Meloni", "kpl", meloni],
     ["2 x Poggers", "kpl", poggers2],
-    ["1 x Poggers", "kpl", poggers1],
-    ["3 x Sasu", "kpl", sasu],
-    ["3 x Karvis", "kpl", karvis],
     ["3 x Alfa", "kpl", alfa],
-    ["3 x Meloni", "kpl", meloni]
+    ["3 x Karvis", "kpl", karvis],
+    ["3 x Sasu", "kpl", sasu],
+    ["1 x Poggers", "kpl", poggers1]
   ];
 
   let space = floor((height - top_bar - bottom_bar) / items.length);
@@ -1021,12 +1021,12 @@ function SlotChart() {
       ["Netto", "coins", netto1],
       ["Palautus-%", "%", palautus.toFixed(2)],
       ["3 x Poggers", "kpl", poggers3],
+      ["3 x Meloni", "kpl", meloni],
       ["2 x Poggers", "kpl", poggers2],
-      ["1 x Poggers", "kpl", poggers1],
-      ["3 x Sasu", "kpl", sasu],
-      ["3 x Karvis", "kpl", karvis],
       ["3 x Alfa", "kpl", alfa],
-      ["3 x Meloni", "kpl", meloni]
+      ["3 x Karvis", "kpl", karvis],
+      ["3 x Sasu", "kpl", sasu],
+      ["1 x Poggers", "kpl", poggers1]  
     ];
 
     let count = 0;
