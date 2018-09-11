@@ -538,12 +538,22 @@ function OverAll() {
     }
   }
 
+  // Valaankasvattajat
+  let valaank = 0;
+  for (let id of ids) {
+    if (id == "date") continue;
+    if (data[id]["omistus"]["valaankasvatusohjelma"]) {
+      valaank += 1;
+    }
+  }
+
   let items = [
     ["Kaikki rahat", "coins", all_money],
     ["Kaikki minuutit", "", minutes],
     ["Kaikki ES", "kpl", es],
     ["Kaikki Tölkit", "kpl", es_t],
-    ["Kultaiset Harpuunat", "kpl", harpoons]
+    ["Kultaiset Harpuunat", "kpl", harpoons],
+    ["Valaankasvattajat", "kpl", valaank]
   ];
 
   let space = floor((height - top_bar - bottom_bar) / items.length);
@@ -1026,7 +1036,7 @@ function SlotChart() {
       ["3 x Alfa", "kpl", alfa],
       ["3 x Karvis", "kpl", karvis],
       ["3 x Sasu", "kpl", sasu],
-      ["1 x Poggers", "kpl", poggers1]  
+      ["1 x Poggers", "kpl", poggers1]
     ];
 
     let count = 0;
