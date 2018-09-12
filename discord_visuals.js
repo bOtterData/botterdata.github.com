@@ -372,6 +372,8 @@ function Chart(_address) {
 
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       value = eval(address);
       // DICT ID -> Value
       if (floor(value) != 0) {
@@ -433,6 +435,8 @@ function Chart(_address) {
 
     for (let id of ids) {
       if (id == "date") continue;
+      if (id == "deck") continue;
+      if (id == "dj") continue;
       value = eval(address);
       if (floor(value) != 0) {
         dict[id] = value; // DICT ID -> Value
@@ -504,6 +508,8 @@ function OverAll() {
   let all_money = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_money += data[id]["omistus"]["rahat"];
   }
 
@@ -511,6 +517,8 @@ function OverAll() {
   let minutes = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     minutes += data[id]["aika_kannuilla"];
   }
   minutes = minutes + " mins (" + (minutes/60).toFixed(2) + " h)";
@@ -519,6 +527,8 @@ function OverAll() {
   let es = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     es += data[id]["omistus"]["ES"];
   }
 
@@ -526,6 +536,8 @@ function OverAll() {
   let es_t = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     es_t += data[id]["omistus"]["ES_tyhjät"];
   }
 
@@ -533,6 +545,8 @@ function OverAll() {
   let harpoons = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     if (data[id]["omistus"]["kultainen_harppuuna"]) {
       harpoons += 1;
     }
@@ -542,6 +556,8 @@ function OverAll() {
   let valaank = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     if (data[id]["omistus"]["valaankasvatusohjelma"]) {
       valaank += 1;
     }
@@ -589,6 +605,8 @@ function OverAll() {
     let all_money = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       all_money += data[id]["omistus"]["rahat"];
     }
 
@@ -596,6 +614,8 @@ function OverAll() {
     let minutes = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       minutes += data[id]["aika_kannuilla"];
     }
     minutes = minutes + " mins (" + (minutes/60).toFixed(2) + " h)";
@@ -604,6 +624,8 @@ function OverAll() {
     let es = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       es += data[id]["omistus"]["ES"];
     }
 
@@ -611,6 +633,8 @@ function OverAll() {
     let es_t = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       es_t += data[id]["omistus"]["ES_tyhjät"];
     }
 
@@ -618,6 +642,8 @@ function OverAll() {
     let harpoons = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       if (data[id]["omistus"]["kultainen_harppuuna"]) {
         harpoons += 1;
       }
@@ -671,6 +697,8 @@ function OverAllGames() {
   let all_wins = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_wins += data[id]["pelit"]["slot_voitot_yhteensä"];
     all_wins += data[id]["pelit"]["KTEM_voitot"];
     all_wins += data[id]["pelit"]["harpoon_voitetut"];
@@ -680,6 +708,8 @@ function OverAllGames() {
   let all_loses = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_loses += data[id]["pelit"]["slot_häviöt_yhteensä"];
     all_loses += data[id]["pelit"]["KTEM_häviöt"];
     all_loses += data[id]["pelit"]["harpoon_hävityt"];
@@ -688,18 +718,24 @@ function OverAllGames() {
   let all_wins_h = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_wins_h += data[id]["pelit"]["harpoon_voitetut"];
   }
 
   let all_wins_k = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_wins_k += data[id]["pelit"]["KTEM_voitot"];
   }
 
   let all_wins_s = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_wins_s += data[id]["pelit"]["slot_voitot_yhteensä"];
   }
 
@@ -756,6 +792,8 @@ function OverAllGames() {
     let all_wins = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       all_wins += data[id]["pelit"]["slot_voitot_yhteensä"];
       all_wins += data[id]["pelit"]["KTEM_voitot"];
       all_wins += data[id]["pelit"]["harpoon_voitetut"];
@@ -765,6 +803,8 @@ function OverAllGames() {
     let all_loses = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       all_loses += data[id]["pelit"]["slot_häviöt_yhteensä"];
       all_loses += data[id]["pelit"]["KTEM_häviöt"];
       all_loses += data[id]["pelit"]["harpoon_hävityt"];
@@ -773,18 +813,24 @@ function OverAllGames() {
       let all_wins_h = 0;
       for (let id of ids) {
         if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
         all_wins_h += data[id]["pelit"]["harpoon_voitetut"];
       }
 
       let all_wins_k = 0;
       for (let id of ids) {
         if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
         all_wins_k += data[id]["pelit"]["KTEM_voitot"];
       }
 
       let all_wins_s = 0;
       for (let id of ids) {
         if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
         all_wins_s += data[id]["pelit"]["slot_voitot_yhteensä"];
       }
 
@@ -848,6 +894,8 @@ function SlotChart() {
   let all_wins1 = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_wins1 += data[id]["pelit"]["slot_voitot_yhteensä"];
   }
 
@@ -855,6 +903,8 @@ function SlotChart() {
   let all_loses1 = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_loses1 += data[id]["pelit"]["slot_häviöt_yhteensä"];
   }
 
@@ -862,6 +912,8 @@ function SlotChart() {
   let all_games1 = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_games1 += data[id]["pelit"]["slot_pelit"];
   }
 
@@ -873,42 +925,56 @@ function SlotChart() {
   let poggers3 = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     poggers3 += data[id]["pelit"]["slot_yksittäisvoitot"]["poggers3"];
   }
 
   let poggers2 = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     poggers2 += data[id]["pelit"]["slot_yksittäisvoitot"]["poggers2"];
   }
 
   let poggers1 = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     poggers1 += data[id]["pelit"]["slot_yksittäisvoitot"]["poggers1"];
   }
 
   let sasu = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     sasu += data[id]["pelit"]["slot_yksittäisvoitot"]["sasu"];
   }
 
   let karvis = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     karvis += data[id]["pelit"]["slot_yksittäisvoitot"]["karvis"];
   }
 
   let alfa = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     alfa += data[id]["pelit"]["slot_yksittäisvoitot"]["alfa"];
   }
 
   let meloni = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     meloni += data[id]["pelit"]["slot_yksittäisvoitot"]["meloni"];
   }
 
@@ -960,6 +1026,8 @@ function SlotChart() {
     let all_wins1 = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       all_wins1 += data[id]["pelit"]["slot_voitot_yhteensä"];
     }
 
@@ -967,6 +1035,8 @@ function SlotChart() {
     let all_loses1 = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       all_loses1 += data[id]["pelit"]["slot_häviöt_yhteensä"];
     }
 
@@ -974,6 +1044,8 @@ function SlotChart() {
     let all_games1 = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       all_games1 += data[id]["pelit"]["slot_pelit"];
     }
 
@@ -985,42 +1057,56 @@ function SlotChart() {
     let poggers3 = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       poggers3 += data[id]["pelit"]["slot_yksittäisvoitot"]["poggers3"];
     }
 
     let poggers2 = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       poggers2 += data[id]["pelit"]["slot_yksittäisvoitot"]["poggers2"];
     }
 
     let poggers1 = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       poggers1 += data[id]["pelit"]["slot_yksittäisvoitot"]["poggers1"];
     }
 
     let sasu = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       sasu += data[id]["pelit"]["slot_yksittäisvoitot"]["sasu"];
     }
 
     let karvis = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       karvis += data[id]["pelit"]["slot_yksittäisvoitot"]["karvis"];
     }
 
     let alfa = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       alfa += data[id]["pelit"]["slot_yksittäisvoitot"]["alfa"];
     }
 
     let meloni = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       meloni += data[id]["pelit"]["slot_yksittäisvoitot"]["meloni"];
     }
 
@@ -1079,6 +1165,8 @@ function KTEMChart() {
   let all_wins2 = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_wins2 += data[id]["pelit"]["KTEM_voitot"];
   }
 
@@ -1086,6 +1174,8 @@ function KTEMChart() {
   let all_loses2 = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_loses2 += data[id]["pelit"]["KTEM_häviöt"];
   }
 
@@ -1093,6 +1183,8 @@ function KTEMChart() {
   let all_games2 = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_games2 += data[id]["pelit"]["KTEM_voitetut_pelit"];
   }
 
@@ -1144,6 +1236,8 @@ function KTEMChart() {
     let all_wins2 = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       all_wins2 += data[id]["pelit"]["KTEM_voitot"];
     }
 
@@ -1151,6 +1245,8 @@ function KTEMChart() {
     let all_loses2 = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       all_loses2 += data[id]["pelit"]["KTEM_häviöt"];
     }
 
@@ -1158,6 +1254,8 @@ function KTEMChart() {
     let all_games2 = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       all_games2 += data[id]["pelit"]["KTEM_voitetut_pelit"];
     }
 
@@ -1218,6 +1316,8 @@ function HarpoonChart() {
   let all_wins3 = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_wins3 += data[id]["pelit"]["harpoon_voitetut"];
   }
 
@@ -1225,6 +1325,8 @@ function HarpoonChart() {
   let all_loses3 = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_loses3 += data[id]["pelit"]["harpoon_hävityt"];
   }
 
@@ -1232,6 +1334,8 @@ function HarpoonChart() {
   let all_games3 = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_games3 += data[id]["pelit"]["harpoon_pelit"];
   }
 
@@ -1239,6 +1343,8 @@ function HarpoonChart() {
   let all_hits = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     all_hits += data[id]["pelit"]["harpoon_osumat"];
   }
 
@@ -1255,6 +1361,8 @@ function HarpoonChart() {
   let hait = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     hait += data[id]["pelit"]["harpoon_yksittäiset"]["harpoon_hai"];
   }
 
@@ -1262,6 +1370,8 @@ function HarpoonChart() {
   let pallot = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     pallot += data[id]["pelit"]["harpoon_yksittäiset"]["harpoon_pallo"];
   }
 
@@ -1269,6 +1379,8 @@ function HarpoonChart() {
   let valaat = 0;
   for (let id of ids) {
     if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
     valaat += data[id]["pelit"]["harpoon_yksittäiset"]["harpoon_valas"];
   }
 
@@ -1323,6 +1435,8 @@ function HarpoonChart() {
     let all_wins3 = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       all_wins3 += data[id]["pelit"]["harpoon_voitetut"];
     }
 
@@ -1330,6 +1444,8 @@ function HarpoonChart() {
     let all_loses3 = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       all_loses3 += data[id]["pelit"]["harpoon_hävityt"];
     }
 
@@ -1337,6 +1453,8 @@ function HarpoonChart() {
     let all_games3 = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       all_games3 += data[id]["pelit"]["harpoon_pelit"];
     }
 
@@ -1344,6 +1462,8 @@ function HarpoonChart() {
     let all_hits = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       all_hits += data[id]["pelit"]["harpoon_osumat"];
     }
 
@@ -1360,6 +1480,8 @@ function HarpoonChart() {
     let hait = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       hait += data[id]["pelit"]["harpoon_yksittäiset"]["harpoon_hai"];
     }
 
@@ -1367,6 +1489,8 @@ function HarpoonChart() {
     let pallot = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       pallot += data[id]["pelit"]["harpoon_yksittäiset"]["harpoon_pallo"];
     }
 
@@ -1374,6 +1498,8 @@ function HarpoonChart() {
     let valaat = 0;
     for (let id of ids) {
       if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
       valaat += data[id]["pelit"]["harpoon_yksittäiset"]["harpoon_valas"];
     }
 
