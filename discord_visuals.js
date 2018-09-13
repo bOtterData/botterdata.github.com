@@ -1532,8 +1532,8 @@ if (id == "dj") continue;
     ["Kaikki panokset", "coins", all_panos],
     ["Blackjackit", "kpl", k1],
     ["Hit", "kpl", hit],
-    ["Stand", "kpl", double],
-    ["Double", "kpl", stand],
+    ["Stand", "kpl", stand],
+    ["Double", "kpl", double],
   ];
 
   let space = floor((height - top_bar - bottom_bar) / items.length);
