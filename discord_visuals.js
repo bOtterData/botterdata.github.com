@@ -15,8 +15,12 @@ let font;
 var database = firebase.database();
 var ref = database.ref('profiles');
 
-var buttons = [];
+let buttons1 = [];
+let buttons = [];
+let game_btns = [];
 var bars = {};
+var yleiset;
+var peliyleiset;
 
 let chart = [];
 
@@ -28,47 +32,69 @@ function preload() {
 function setup() {
   textFont(font);
 
-  createCanvas(900, 900);
+  createCanvas(1100, 900);
   frameRate(60);
-  buttons.push(new Button("Rahat", 20, 10, 70, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Aktiivisuus", 30 + 70 * 1, 10, 70, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Peak", 40 + 70 * 2, 10, 70, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Perustulo", 50 + 70 * 3, 10, 70, 20, [100, 100, 100], [200, 200, 200]));
 
-  buttons.push(new Button("ES", 20, 10 + 30, 70, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Tyhjät ES", 30 + 70 * 1, 10 + 30, 70, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Annetut", 40 + 70 * 2, 10 + 30, 70, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Saadut", 50 + 70 * 3, 10 + 30, 70, 20, [100, 100, 100], [200, 200, 200]));
 
-  buttons.push(new Button("Slot-Pelit", width - 10 - 100 * 5, 10, 90, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("KTEM-Pelit", width - 10 - 100 * 4, 10, 90, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Ryhmäpelit", width - 10 - 100 * 3, 10, 90, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Harpoon-Pelit", width - 10 - 100 * 2, 10, 90, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Harpoon-Voitot", width - 10 - 100, 10, 90, 20, [100, 100, 100], [200, 200, 200]));
+  var labels = ["Rahat", "Aktiivisuus", "Peak", "Perustulo", "ES", "Tyhjät ES", "Annetut", "Saadut"];
 
-  buttons.push(new Button("Slot-Voitot", width - 10 - 100 * 5, 10 + 30, 90, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("KTEM-Voitot", width - 10 - 100 * 4, 10 + 30, 90, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Ryhmäpeli W%", width - 10 - 100 * 3, 10 + 30, 90, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Harpoon-Osumat", width - 10 - 100 * 2, 10 + 30, 90, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Harpoon-Hävityt", width - 10 - 100, 10 + 30, 90, 20, [100, 100, 100], [200, 200, 200]));
+  var count = 0;
+  var x = 20;
+  var y = 10;
 
-  buttons.push(new Button("Slot-Häviöt", width - 10 - 100 * 5, 70, 90, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("KTEM-Häviöt", width - 10 - 100 * 4, 70, 90, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Ryhmäpelinetto", width - 10 - 100 * 3, 70, 90, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Harpoon-Acc", width - 10 - 100 * 2, 70, 90, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Harpoon-Netto", width - 10 - 100, 70, 90, 20, [100, 100, 100], [200, 200, 200]));
+  for (let s = 0; s < 2; s++){
+    buttons1.push([]);
+    for (let c = 0; c < 4; c++) {
+      buttons1[s].push(new Button(labels[count], x + 80*s, y + 30*c, 70, 20, [100, 100, 100], [200, 200, 200]));
+      count++;
+    }
+  }
 
-  buttons.push(new Button("Slot-Netto", width - 10 - 100 * 5, 100, 90, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("KTEM-Netto", width - 10 - 100 * 4, 100, 90, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("SLOT DATA", width - 10 - 100 * 3, 100, 90, 20, [40, 40, 40], [200, 200, 200]));
-  buttons.push(new Button("KTEM DATA", width - 10 - 100 * 2, 100, 90, 20, [40, 40, 40], [200, 200, 200]));
-  buttons.push(new Button("HARPOON DATA", width - 10 - 100, 100, 90, 20, [40, 40, 40], [200, 200, 200]));
+  var labels = [
+    ["Slot-Pelit", "KTEM-Pelit", "Ryhmäpelit", "Harpoon-Pelit", "Harpoon-Voitot", "BJ-Pelit"],
+    ["Slot-Voitot", "KTEM-Voitot", "Ryhmäpelit W%", "Harpoon-Osumat", "Harpoon-Hävityt", "BJ-Voitot"],
+    ["Slot-Häviöt", "KTEM-Häviöt", "Ryhmäpelinetto", "Harpoon-Acc", "Harpoon-Netto", "BJ-Häviöt"],
+    ["Slot-Netto", "KTEM-Netto", " ", " ", " ", "BJ-Netto"],
+  ];
 
-  buttons.push(new Button("Yleinen", 20, 70, 150, 20, [100, 100, 100], [200, 200, 200]));
-  buttons.push(new Button("Pelit yleinen", 40 + 70 * 2, 70, 150, 20, [100, 100, 100], [200, 200, 200]));
+  var x1 = 130 + 20;
+
+  var count = 0;
+  var x = width - 100*6 - 10 - x1;
+  var y = 10;
+
+  for (let s = 0; s < 6; s++){
+    buttons.push([]);
+    for (let c = 0; c < 4; c++) {
+      buttons[s].push(new Button(labels[c][s], x + 100*s, y + 30*c, 90, 20, [100, 100, 100], [200, 200, 200]));
+      count++;
+    }
+  }
+
+  var labels = [
+    ["SLOT DATA"],
+    ["KTEM DATA"],
+    ["HARPOON DATA"],
+    ["BJ DATA"],
+  ];
+
+  var count = 0;
+  for (let s = 0; s < 1; s++){
+    game_btns.push([]);
+    for (let c = 0; c < 4; c++) {
+      game_btns[s].push(new Button(labels[c][s], x + + 100*6 + 130*s, y + 30*c, 140, 20, [40, 40, 40], [200, 200, 200]));
+      count++;
+    }
+  }
+
+  var x = 20;
+  var mutka = (width - 100*6 - 10 - x1) + 100*6 + 130*0;
+  yleiset = new Button("Yleiset", x + 80*2, 10, (x + 80*5) - (x + 80*3) - 10, 50, [40, 40, 40], [200, 200, 200]);
+  peliyleiset = new Button("Pelit yleiset", x + 80*2, 70, (x + 80*5) - (x + 80*3) -10, 50, [40, 40, 40], [200, 200, 200]);
+
 
   chart.push(new Chart('rahat'));
-  buttons[0].activated();
+  buttons[0][0].activated();
 
 }
 
@@ -80,11 +106,6 @@ function draw() {
     return;
   }
 
-  fill(40);
-  noStroke();
-  rect(60 + 70 * 4, 10, (width - 20 - 100 * 5) - (60 + 70 * 4), 30 * 4 - 10, 3, 3, 3, 3);
-
-
   if (frameCount == 100) {
     chart[0].create();
   }
@@ -95,9 +116,29 @@ function draw() {
     }
   }
 
-  for (let i of buttons) {
-    i.show();
+
+  for (let r = 0; r < 2; r++){
+    for (let c = 0; c < 4; c++) {
+      buttons1[r][c].show();
+    }
   }
+
+  for (let r = 0; r < 6; r++){
+    for (let c = 0; c < 4; c++) {
+      buttons[r][c].show();
+    }
+  }
+
+  for (let s = 0; s < 1; s++){
+    game_btns.push([]);
+    for (let c = 0; c < 4; c++) {
+      game_btns[s][c].show();
+
+    }
+  }
+  yleiset.show();
+  peliyleiset.show();
+
 
   var items = Object.keys(bars).map(function(key) {
     return [key, bars[key]];
@@ -131,8 +172,10 @@ function Button(_text, _x, _y, _w, _h, _c1, _c2) {
     rect(this.x, this.y, this.w, this.h, 3, 3, 3, 3);
     fill(this.c2);
     textAlign(CENTER, CENTER);
-    textSize(11.5);
-    text(this.text, this.x + this.w / 2, this.y + this.h / 2 + this.h / 5.2);
+    let txts = map(this.h, 20, 50, 11.5, 18);
+    let lift = map(this.h, 20, 50, 5, 8);
+    textSize(txts);
+    text(this.text, this.x + this.w / 2, this.y + this.h / 2 + this.h / lift );
   }
 
   this.activated = function() {
@@ -364,6 +407,22 @@ function Chart(_address) {
     address = 'data[id]["pelit"]["slot_voitot_yhteensä"] - data[id]["pelit"]["slot_häviöt_yhteensä"]';
     yksikkö = "coins";
   }
+  if (_address == "BJ-Pelit") {
+    address = 'data[id]["pelit"]["BJ_pelit"]';
+    yksikkö = "kpl";
+  }
+  if (_address == "BJ-Voitot") {
+    address = 'data[id]["pelit"]["BJ_voitetut_rahat"]';
+    yksikkö = "coins";
+  }
+  if (_address == "BJ-Häviöt") {
+    address = 'data[id]["pelit"]["BJ_hävityt_rahat"]';
+    yksikkö = "coins";
+  }
+  if (_address == "BJ-Netto") {
+    address = 'data[id]["pelit"]["BJ_voitetut_rahat"] - data[id]["pelit"]["BJ_hävityt_rahat"]';
+    yksikkö = "coins";
+  }
 
   this.create = function() {
 
@@ -508,8 +567,8 @@ function OverAll() {
   let all_money = 0;
   for (let id of ids) {
     if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+    if (id == "deck") continue;
+    if (id == "dj") continue;
     all_money += data[id]["omistus"]["rahat"];
   }
 
@@ -517,8 +576,8 @@ if (id == "dj") continue;
   let minutes = 0;
   for (let id of ids) {
     if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+    if (id == "deck") continue;
+    if (id == "dj") continue;
     minutes += data[id]["aika_kannuilla"];
   }
   minutes = minutes + " mins (" + (minutes/60).toFixed(2) + " h)";
@@ -527,8 +586,8 @@ if (id == "dj") continue;
   let es = 0;
   for (let id of ids) {
     if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+    if (id == "deck") continue;
+    if (id == "dj") continue;
     es += data[id]["omistus"]["ES"];
   }
 
@@ -536,8 +595,8 @@ if (id == "dj") continue;
   let es_t = 0;
   for (let id of ids) {
     if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+    if (id == "deck") continue;
+    if (id == "dj") continue;
     es_t += data[id]["omistus"]["ES_tyhjät"];
   }
 
@@ -545,8 +604,8 @@ if (id == "dj") continue;
   let harpoons = 0;
   for (let id of ids) {
     if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+    if (id == "deck") continue;
+    if (id == "dj") continue;
     if (data[id]["omistus"]["kultainen_harppuuna"]) {
       harpoons += 1;
     }
@@ -556,8 +615,8 @@ if (id == "dj") continue;
   let valaank = 0;
   for (let id of ids) {
     if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+    if (id == "deck") continue;
+    if (id == "dj") continue;
     if (data[id]["omistus"]["valaankasvatusohjelma"]) {
       valaank += 1;
     }
@@ -605,8 +664,8 @@ if (id == "dj") continue;
     let all_money = 0;
     for (let id of ids) {
       if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+    if (id == "deck") continue;
+    if (id == "dj") continue;
       all_money += data[id]["omistus"]["rahat"];
     }
 
@@ -614,8 +673,8 @@ if (id == "dj") continue;
     let minutes = 0;
     for (let id of ids) {
       if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+      if (id == "deck") continue;
+      if (id == "dj") continue;
       minutes += data[id]["aika_kannuilla"];
     }
     minutes = minutes + " mins (" + (minutes/60).toFixed(2) + " h)";
@@ -624,8 +683,8 @@ if (id == "dj") continue;
     let es = 0;
     for (let id of ids) {
       if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+      if (id == "deck") continue;
+      if (id == "dj") continue;
       es += data[id]["omistus"]["ES"];
     }
 
@@ -633,8 +692,8 @@ if (id == "dj") continue;
     let es_t = 0;
     for (let id of ids) {
       if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+      if (id == "deck") continue;
+      if (id == "dj") continue;
       es_t += data[id]["omistus"]["ES_tyhjät"];
     }
 
@@ -642,8 +701,8 @@ if (id == "dj") continue;
     let harpoons = 0;
     for (let id of ids) {
       if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+      if (id == "deck") continue;
+      if (id == "dj") continue;
       if (data[id]["omistus"]["kultainen_harppuuna"]) {
         harpoons += 1;
       }
@@ -683,6 +742,28 @@ if (id == "dj") continue;
 
 }
 
+function deactivateAll() {
+  for (let r = 0; r < 2; r++){
+    for (let c = 0; c < 4; c++) {
+        buttons1[r][c].deactivated();
+    }
+  }
+  for (let r = 0; r < 6; r++){
+    for (let c = 0; c < 4; c++) {
+        buttons[r][c].deactivated();
+    }
+  }
+
+  for (let s = 0; s < 1; s++){
+    for (let c = 0; c < 4; c++) {
+      game_btns[s][c].deactivated();
+    }
+  }
+
+  yleiset.deactivated();
+  peliyleiset.deactivated();
+}
+
 function OverAllGames() {
 
   let top_bar = 70 * 4 / 2;
@@ -697,46 +778,56 @@ function OverAllGames() {
   let all_wins = 0;
   for (let id of ids) {
     if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
-    all_wins += data[id]["pelit"]["slot_voitot_yhteensä"];
-    all_wins += data[id]["pelit"]["KTEM_voitot"];
-    all_wins += data[id]["pelit"]["harpoon_voitetut"];
+    if (id == "deck") continue;
+    if (id == "dj") continue;
+        all_wins += data[id]["pelit"]["slot_voitot_yhteensä"];
+        all_wins += data[id]["pelit"]["KTEM_voitot"];
+        all_wins += data[id]["pelit"]["harpoon_voitetut"];
+        all_wins += data[id]["pelit"]["BJ_voitetut_rahat"];
   }
 
   // Kaikki häviöt
   let all_loses = 0;
   for (let id of ids) {
     if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+    if (id == "deck") continue;
+    if (id == "dj") continue;
     all_loses += data[id]["pelit"]["slot_häviöt_yhteensä"];
     all_loses += data[id]["pelit"]["KTEM_häviöt"];
     all_loses += data[id]["pelit"]["harpoon_hävityt"];
+    all_loses += data[id]["pelit"]["BJ_hävityt_rahat"];
   }
 
   let all_wins_h = 0;
   for (let id of ids) {
     if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+    if (id == "deck") continue;
+    if (id == "dj") continue;
     all_wins_h += data[id]["pelit"]["harpoon_voitetut"];
   }
 
   let all_wins_k = 0;
   for (let id of ids) {
     if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+    if (id == "deck") continue;
+    if (id == "dj") continue;
     all_wins_k += data[id]["pelit"]["KTEM_voitot"];
   }
 
   let all_wins_s = 0;
   for (let id of ids) {
     if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+    if (id == "deck") continue;
+    if (id == "dj") continue;
     all_wins_s += data[id]["pelit"]["slot_voitot_yhteensä"];
+  }
+
+  let all_wins_b = 0;
+  for (let id of ids) {
+    if (id == "date") continue;
+    if (id == "deck") continue;
+    if (id == "dj") continue;
+    all_wins_b += data[id]["pelit"]["BJ_voitetut_rahat"];
   }
 
   // Netto
@@ -747,6 +838,7 @@ if (id == "dj") continue;
   let s_pp = (all_wins_s * 100 / all_wins).toFixed(2);
   let k_pp = (all_wins_k * 100 / all_wins).toFixed(2);
   let h_pp = (all_wins_h * 100 / all_wins).toFixed(2);
+  let b_pp = (all_wins_b * 100 / all_wins).toFixed(2);
 
   let items = [
     ["Kaikki voitot", "coins", all_wins],
@@ -756,6 +848,7 @@ if (id == "dj") continue;
     ["Voittojen osuus - Slot", "%", s_pp],
     ["Voittojen osuus - KTEM", "%", k_pp],
     ["Voittojen osuus - Harpoon", "%", h_pp],
+    ["Voittojen osuus - BJ", "%", b_pp],
 
   ];
 
@@ -792,67 +885,79 @@ if (id == "dj") continue;
     let all_wins = 0;
     for (let id of ids) {
       if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+      if (id == "deck") continue;
+      if (id == "dj") continue;
       all_wins += data[id]["pelit"]["slot_voitot_yhteensä"];
       all_wins += data[id]["pelit"]["KTEM_voitot"];
       all_wins += data[id]["pelit"]["harpoon_voitetut"];
+      all_wins += data[id]["pelit"]["BJ_voitetut_rahat"];
     }
 
     // Kaikki häviöt
     let all_loses = 0;
     for (let id of ids) {
       if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
+      if (id == "deck") continue;
+      if (id == "dj") continue;
       all_loses += data[id]["pelit"]["slot_häviöt_yhteensä"];
       all_loses += data[id]["pelit"]["KTEM_häviöt"];
       all_loses += data[id]["pelit"]["harpoon_hävityt"];
+      all_loses += data[id]["pelit"]["BJ_hävityt_rahat"];
     }
 
-      let all_wins_h = 0;
-      for (let id of ids) {
-        if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
-        all_wins_h += data[id]["pelit"]["harpoon_voitetut"];
-      }
+    let all_wins_h = 0;
+    for (let id of ids) {
+      if (id == "date") continue;
+      if (id == "deck") continue;
+      if (id == "dj") continue;
+      all_wins_h += data[id]["pelit"]["harpoon_voitetut"];
+    }
 
-      let all_wins_k = 0;
-      for (let id of ids) {
-        if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
-        all_wins_k += data[id]["pelit"]["KTEM_voitot"];
-      }
+    let all_wins_k = 0;
+    for (let id of ids) {
+      if (id == "date") continue;
+      if (id == "deck") continue;
+      if (id == "dj") continue;
+      all_wins_k += data[id]["pelit"]["KTEM_voitot"];
+    }
 
-      let all_wins_s = 0;
-      for (let id of ids) {
-        if (id == "date") continue;
-if (id == "deck") continue;
-if (id == "dj") continue;
-        all_wins_s += data[id]["pelit"]["slot_voitot_yhteensä"];
-      }
+    let all_wins_s = 0;
+    for (let id of ids) {
+      if (id == "date") continue;
+      if (id == "deck") continue;
+      if (id == "dj") continue;
+      all_wins_s += data[id]["pelit"]["slot_voitot_yhteensä"];
+    }
 
-      // Netto
-      let netto = all_wins - all_loses;
+    let all_wins_b = 0;
+    for (let id of ids) {
+      if (id == "date") continue;
+      if (id == "deck") continue;
+      if (id == "dj") continue;
+      all_wins_b += data[id]["pelit"]["BJ_voitetut_rahat"];
+    }
 
-      let palatutsp = (all_wins * 100 / all_loses).toFixed(2);
+    // Netto
+    let netto = all_wins - all_loses;
 
-      let s_pp = (all_wins_s * 100 / all_wins).toFixed(2);
-      let k_pp = (all_wins_k * 100 / all_wins).toFixed(2);
-      let h_pp = (all_wins_h * 100 / all_wins).toFixed(2);
+    let palatutsp = (all_wins * 100 / all_loses).toFixed(2);
 
-      let items = [
-        ["Kaikki voitot", "coins", all_wins],
-        ["Kaikki häviöt", "coins", all_loses],
-        ["Netto", "coins", netto],
-        ["Palautus-%", "%", palatutsp],
-        ["Voittojen osuus - Slot", "%", s_pp],
-        ["Voittojen osuus - KTEM", "%", k_pp],
-        ["Voittojen osuus - Harpoon", "%", h_pp],
+    let s_pp = (all_wins_s * 100 / all_wins).toFixed(2);
+    let k_pp = (all_wins_k * 100 / all_wins).toFixed(2);
+    let h_pp = (all_wins_h * 100 / all_wins).toFixed(2);
+    let b_pp = (all_wins_b * 100 / all_wins).toFixed(2);
 
-      ];
+    let items = [
+      ["Kaikki voitot", "coins", all_wins],
+      ["Kaikki häviöt", "coins", all_loses],
+      ["Netto", "coins", netto],
+      ["Palautus-%", "%", palatutsp],
+      ["Voittojen osuus - Slot", "%", s_pp],
+      ["Voittojen osuus - KTEM", "%", k_pp],
+      ["Voittojen osuus - Harpoon", "%", h_pp],
+      ["Voittojen osuus - BJ", "%", b_pp]
+
+    ];
 
       let count = 0;
       for (var i of items) {
@@ -875,9 +980,6 @@ if (id == "dj") continue;
         count++;
       }
     }
-
-
-
 }
 
 function SlotChart() {
@@ -1302,6 +1404,313 @@ if (id == "dj") continue;
 
 }
 
+function BJChart() {
+
+  let top_bar = 70 * 4 / 2;
+  let left_bar = 20;
+  let right_bar = 20;
+  let bottom_bar = 10;
+  let space_between = 8;
+
+  let ids = Object.keys(data); // Lista ID
+
+  // Kaikki voitot
+  let all_wins6 = 0;
+  for (let id of ids) {
+    if (id == "date") continue;
+    if (id == "deck") continue;
+    if (id == "dj") continue;
+    all_wins6 += data[id]["pelit"]["BJ_voitetut_rahat"];
+  }
+
+  // Kaikki häviöt
+  let all_loses6 = 0;
+  for (let id of ids) {
+    if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
+    all_loses6 += data[id]["pelit"]["BJ_hävityt_rahat"];
+  }
+
+  // Kaikki pelit
+  let all_games6 = 0;
+  for (let id of ids) {
+    if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
+    all_games6 += data[id]["pelit"]["BJ_pelit"];
+  }
+
+  // Kaikki pelit
+  let all_panos = 0;
+  for (let id of ids) {
+    if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
+    all_panos += data[id]["pelit"]["BJ_panokset"];
+  }
+
+  // Kaikki pelit
+  let kortit = 0;
+  for (let id of ids) {
+    if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
+    kortit += data[id]["pelit"]["kortteja_pelannut"];
+  }
+
+  // Kaikki pelit
+  let k1 = 0;
+  for (let id of ids) {
+    if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
+    k1 += data[id]["pelit"]["BJ_21"];
+  }
+
+  // Kaikki pelit
+  let hit = 0;
+  for (let id of ids) {
+    if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
+    hit += data[id]["pelit"]["BJ_hit"];
+  }
+
+  // Kaikki pelit
+  let double = 0;
+  for (let id of ids) {
+    if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
+    hit += data[id]["pelit"]["BJ_double"];
+  }
+  // Kaikki pelit
+  let stand = 0;
+  for (let id of ids) {
+    if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
+    hit += data[id]["pelit"]["BJ_stand"];
+  }
+  // Kaikki pelit
+  let all_wins_g6 = 0;
+  for (let id of ids) {
+    if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
+    all_wins_g6 += data[id]["pelit"]["BJ_voitetut_pelit"];
+  }
+
+  // Kaikki pelit
+  let all_loses_g6 = 0;
+  for (let id of ids) {
+    if (id == "date") continue;
+if (id == "deck") continue;
+if (id == "dj") continue;
+    all_loses_g6 += data[id]["pelit"]["BJ_hävityt_pelit"];
+  }
+
+  // Netto
+  let netto6 = all_wins6 - all_loses6;
+
+  let palautus6 = (all_wins6 / all_loses6) * 100;
+
+  let keskimpanos6 = (all_panos) / all_games6;
+
+
+  let items = [
+    ["Kaikki pelit", "kpl", all_games6],
+    ["Voitetut pelit", "kpl", all_wins_g6],
+    ["Hävityt pelit", "kpl", all_loses_g6],
+    ["Kaikki voitot", "coins", all_wins6],
+    ["Kaikki häviöt", "coins", all_loses6],
+    ["Netto", "coins", netto6],
+    ["Palautus-%", "%", palautus6.toFixed(2)],
+    ["Pelatut kortit", "kpl", kortit],
+    ["Keskimääräinen panos", "coins", keskimpanos6.toFixed(0)],
+    ["Kaikki panokset", "coins", all_panos],
+    ["Blackjackit", "kpl", k1],
+    ["Hit", "kpl", hit],
+    ["Stand", "kpl", double],
+    ["Double", "kpl", stand],
+  ];
+
+  let space = floor((height - top_bar - bottom_bar) / items.length);
+  space = constrain(space, 0, 70);
+
+  this.create = function() {
+    let count = 0;
+    for (var i of items) {
+      _x = left_bar;
+      _y = top_bar + count * space;
+      _w = width - left_bar - right_bar
+      _h = space - space_between;
+      _c1 = [100, 100, 100];
+      _c2 = [200, 200, 200];
+      _value = i[0];
+
+      _name = i[2];
+
+      if (i[2] < 0) {
+        _c1 = [255, 60, 60];
+      }
+
+      bars[count] = new StaticBar(_x, _y, _w, _h, _c1, _c2, _value, _name, i[1]);
+      count++;
+    }
+  }
+
+  this.update = function() {
+
+    // Kaikki voitot
+    let all_wins6 = 0;
+    for (let id of ids) {
+      if (id == "date") continue;
+      if (id == "deck") continue;
+      if (id == "dj") continue;
+      all_wins6 += data[id]["pelit"]["BJ_voitetut_rahat"];
+    }
+
+    // Kaikki häviöt
+    let all_loses6 = 0;
+    for (let id of ids) {
+      if (id == "date") continue;
+  if (id == "deck") continue;
+  if (id == "dj") continue;
+      all_loses6 += data[id]["pelit"]["BJ_hävityt_rahat"];
+    }
+
+    // Kaikki pelit
+    let all_games6 = 0;
+    for (let id of ids) {
+      if (id == "date") continue;
+  if (id == "deck") continue;
+  if (id == "dj") continue;
+      all_games6 += data[id]["pelit"]["BJ_pelit"];
+    }
+
+    // Kaikki pelit
+    let all_panos = 0;
+    for (let id of ids) {
+      if (id == "date") continue;
+  if (id == "deck") continue;
+  if (id == "dj") continue;
+      all_panos += data[id]["pelit"]["BJ_panokset"];
+    }
+
+    // Kaikki pelit
+    let kortit = 0;
+    for (let id of ids) {
+      if (id == "date") continue;
+  if (id == "deck") continue;
+  if (id == "dj") continue;
+      kortit += data[id]["pelit"]["kortteja_pelannut"];
+    }
+
+    // Kaikki pelit
+    let k1 = 0;
+    for (let id of ids) {
+      if (id == "date") continue;
+  if (id == "deck") continue;
+  if (id == "dj") continue;
+      k1 += data[id]["pelit"]["BJ_21"];
+    }
+
+    // Kaikki pelit
+    let hit = 0;
+    for (let id of ids) {
+      if (id == "date") continue;
+  if (id == "deck") continue;
+  if (id == "dj") continue;
+      hit += data[id]["pelit"]["BJ_hit"];
+    }
+
+    // Kaikki pelit
+    let double = 0;
+    for (let id of ids) {
+      if (id == "date") continue;
+  if (id == "deck") continue;
+  if (id == "dj") continue;
+      double += data[id]["pelit"]["BJ_double"];
+    }
+    // Kaikki pelit
+    let stand = 0;
+    for (let id of ids) {
+      if (id == "date") continue;
+  if (id == "deck") continue;
+  if (id == "dj") continue;
+      stand += data[id]["pelit"]["BJ_stand"];
+    }
+    // Kaikki pelit
+    let all_wins_g6 = 0;
+    for (let id of ids) {
+      if (id == "date") continue;
+  if (id == "deck") continue;
+  if (id == "dj") continue;
+      all_wins_g6 += data[id]["pelit"]["BJ_voitetut_pelit"];
+    }
+
+    // Kaikki pelit
+    let all_loses_g6 = 0;
+    for (let id of ids) {
+      if (id == "date") continue;
+  if (id == "deck") continue;
+  if (id == "dj") continue;
+      all_loses_g6 += data[id]["pelit"]["BJ_hävityt_pelit"];
+    }
+
+    // Netto
+    let netto6 = all_wins6 - all_loses6;
+
+    let palautus6 = (all_wins6 / all_loses6) * 100;
+
+    let keskimpanos6 = (all_panos) / all_games6;
+
+
+    let items = [
+      ["Kaikki pelit", "kpl", all_games6],
+      ["Voitetut pelit", "kpl", all_wins_g6],
+      ["Hävityt pelit", "kpl", all_loses_g6],
+      ["Kaikki voitot", "coins", all_wins6],
+      ["Kaikki häviöt", "coins", all_loses6],
+      ["Netto", "coins", netto6],
+      ["Palautus-%", "%", palautus6.toFixed(2)],
+      ["Pelatut kortit", "kpl", kortit],
+      ["Keskimääräinen panos", "coins", keskimpanos6.toFixed(0)],
+      ["Kaikki panokset", "coins", all_panos],
+      ["Blackjackit", "kpl", k1],
+      ["Hit", "kpl", hit],
+      ["Stand", "kpl", stand],
+      ["Double", "kpl", double],
+    ];
+
+    let count = 0;
+    for (var i of items) {
+      _x = left_bar;
+      _y = top_bar + count * space;
+      _w = width - left_bar - right_bar
+      _h = space - space_between;
+      _c1 = [100, 100, 100];
+      _c2 = [200, 200, 200];
+      _value = i[2];
+
+      if (_value < 0) {
+        _c1 = [255, 60, 60];
+      }
+
+      _name = i[0];
+
+      bars[count].set(_value, _name, _c1);
+
+      count++;
+    }
+  }
+
+
+
+}
+
 function HarpoonChart() {
 
   let top_bar = 70 * 4 / 2;
@@ -1551,312 +1960,94 @@ if (id == "dj") continue;
 
 function mousePressed() {
 
-  if (buttons[0].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[0].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('rahat'));
-    chart[0].create();
-  }
-  if (buttons[1].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[1].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('aktiivisuus'));
-    chart[0].create();
-  }
-  if (buttons[2].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[2].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('peak'));
-    chart[0].create();
-  }
-  if (buttons[3].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[3].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('perustulo'));
-    chart[0].create();
-  }
-  if (buttons[4].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[4].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('es'));
-    chart[0].create();
-  }
-  if (buttons[5].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[5].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('tyhjät'));
-    chart[0].create();
-  }
-  if (buttons[6].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[6].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('annetut'));
-    chart[0].create();
-  }
-  if (buttons[7].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[7].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('saadut'));
-    chart[0].create();
-  }
+  var labels = ["rahat", "aktiivisuus", "peak", "perustulo", "es", "tyhjät", "annetut", "saadut"];
 
+  var count = 0;
+  for (let r = 0; r < 2; r++){
+    for (let c = 0; c < 4; c++) {
+      if (buttons1[r][c].intersects(mouseX, mouseY)) {
+        deactivateAll();
+        buttons1[r][c].activated();
+        chart = [];
+        bars = {};
+        chart.push(new Chart(labels[count]));
+        chart[0].create();
+      }
+      count++;
+    }
+  }
   ////////////////////
 
+  var labels = [
+    ["Slot-Pelit", "KTEM-Pelit", "Ryhmäpelit", "Harpoon-Pelit", "Harpoon-Voitot", "BJ-Pelit"],
+    ["Slot Voitetut", "KTEM-Voitot", "Ryhmäpeli W%", "Harpoon-Osumat", "Harpoon-Hävityt", "BJ-Voitot"],
+    ["Slot Häviöt", "KTEM-Pelit", "Ryhmäpelinetto", "Harpoon-Accuracy", "Harpoon-Netto", "BJ-Häviöt"],
+    ["Slot-Netto", "KTEM-Netto", " ", " ", " ", "BJ-Netto"],
+  ];
 
-  if (buttons[8].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
+  var count = 0;
+  for (let r = 0; r < 6; r++){
+    for (let c = 0; c < 4; c++) {
+      if (labels[c][r] == " " ) continue;
+      if (buttons[r][c].intersects(mouseX, mouseY)) {
+        deactivateAll();
+        buttons[r][c].activated();
+        chart = [];
+        bars = {};
+        chart.push(new Chart(labels[c][r]));
+        chart[0].create();
+      }
+      count++;
     }
-    buttons[8].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('Slot-Pelit'));
-    chart[0].create();
-  }
-  if (buttons[9].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[9].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('KTEM-Pelit'));
-    chart[0].create();
-  }
-  if (buttons[10].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[10].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('Ryhmäpelit'));
-    chart[0].create();
-  }
-  if (buttons[11].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[11].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('Harpoon-Pelit'));
-    chart[0].create();
-  }
-  if (buttons[12].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[12].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('Harpoon-Voitot'));
-    chart[0].create();
-  }
-  if (buttons[13].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[13].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('Slot Voitetut'));
-    chart[0].create();
-  }
-  if (buttons[14].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[14].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('KTEM-Voitot'));
-    chart[0].create();
-  }
-  if (buttons[15].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[15].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('Ryhmäpeli W%'));
-    chart[0].create();
-  }
-  if (buttons[16].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[16].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('Harpoon-Osumat'));
-    chart[0].create();
-  }
-  if (buttons[17].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[17].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('Harpoon-Hävityt'));
-    chart[0].create();
-  }
-  if (buttons[18].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[18].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('Slot Häviöt'));
-    chart[0].create();
-  }
-  if (buttons[19].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[19].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('KTEM-Häviöt'));
-    chart[0].create();
-  }
-  if (buttons[20].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[20].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('Ryhmäpelinetto'));
-    chart[0].create();
-  }
-  if (buttons[21].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[21].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('Harpoon-Accuracy'));
-    chart[0].create();
-  }
-  if (buttons[22].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[22].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('Harpoon-Netto'));
-    chart[0].create();
-  }
-  if (buttons[23].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[23].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('Slot-Netto'));
-    chart[0].create();
-  }
-  if (buttons[24].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[24].activated();
-    chart = [];
-    bars = {};
-    chart.push(new Chart('KTEM-Netto'));
-    chart[0].create();
   }
 
-  if (buttons[28].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
+  var labels = [
+    ["SLOT DATA"],
+    ["KTEM DATA"],
+    ["HARPOON DATA"],
+    ["BJ DATA"],
+  ];
+
+  var count = 0;
+  for (let s = 0; s < 1; s++){
+    for (let c = 0; c < 4; c++) {
+      if (game_btns[s][c].intersects(mouseX, mouseY)) {
+      deactivateAll();
+      game_btns[s][c].activated();
+      chart = [];
+      bars = {};
+      if (labels[c][s] == "SLOT DATA") {
+        chart.push(new SlotChart());
+      }
+      if (labels[c][s] == "KTEM DATA") {
+        chart.push(new KTEMChart());
+      }
+      if (labels[c][s] == "HARPOON DATA") {
+        chart.push(new HarpoonChart());
+      }
+      if (labels[c][s] == "BJ DATA") {
+        chart.push(new BJChart());
+      }
+
+      chart[0].create();
+
     }
-    buttons[28].activated();
+  }
+  }
+  if (yleiset.intersects(mouseX, mouseY)) {
+    deactivateAll();
+    yleiset.activated();
     chart = [];
     bars = {};
     chart.push(new OverAll());
     chart[0].create();
   }
-  if (buttons[29].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[29].activated();
+  if (peliyleiset.intersects(mouseX, mouseY)) {
+    deactivateAll();
+    peliyleiset.activated();
     chart = [];
     bars = {};
     chart.push(new OverAllGames());
-    chart[0].create();
-  }
-
-  if (buttons[25].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[25].activated();
-    chart = [];
-    bars = {};
-    chart.push(new SlotChart());
-    chart[0].create();
-  }
-
-  if (buttons[26].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[26].activated();
-    chart = [];
-    bars = {};
-    chart.push(new KTEMChart());
-    chart[0].create();
-  }
-
-  if (buttons[27].intersects(mouseX, mouseY)) {
-    for (let b of buttons) {
-      b.deactivated();
-    }
-    buttons[27].activated();
-    chart = [];
-    bars = {};
-    chart.push(new HarpoonChart());
     chart[0].create();
   }
 
