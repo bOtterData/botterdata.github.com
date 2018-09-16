@@ -628,7 +628,8 @@ function OverAll() {
     ["Kaikki ES", "kpl", es],
     ["Kaikki Tölkit", "kpl", es_t],
     ["Kultaiset Harpuunat", "kpl", harpoons],
-    ["Valaankasvattajat", "kpl", valaank]
+    ["Valaankasvattajat", "kpl", valaank],
+    ["Season 2 alkoi", "", "30.8.2018"]
   ];
 
   let space = floor((height - top_bar - bottom_bar) / items.length);
