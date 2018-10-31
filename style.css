@@ -1,0 +1,266 @@
+body {
+   background-attachment: fixed;
+   background-size: 1920*2px 1080*2px;
+}
+
+canvas {
+   margin: 0 auto;
+   display: block;
+   border-radius: 10px;
+}
+
+textarea {
+   border: none;
+   margin: 0 auto;
+   display: block;
+   width: 753px;
+   font-Size: 15px;
+   font-family: 'Source Code Pro', monospace;
+   text-align: left;
+}
+
+input {
+   border: none;
+   margin: 0 auto;
+   display: block;
+   width: 757px;
+   font-Size: 15px;
+   font-family: 'Source Code Pro', monospace;
+   text-align: center;
+}
+
+iframe {
+   margin-top: 40px;
+   margin-bottom: 10px;
+   margin-left: 80px;
+
+   -moz-border-radius-topright: 20px;
+   -webkit-border-top-right-radius: 20px;
+   -moz-border-radius-topleft: 20px;
+   -webkit-border-top-left-radius: 20px;
+   -moz-border-radius-topright: 20px;
+   -webkit-border-top-right-radius: 20px;
+   -moz-border-radius-topleft: 20px;
+   -webkit-border-top-left-radius: 20px;
+   -moz-border-radius-bottomright: 20px;
+   -webkit-border-bottom-right-radius: 20px;
+   -moz-border-radius-bottomleft: 20px;
+   -webkit-border-bottom-left-radius: 20px;
+   -moz-border-radius-topright: 20px;
+   -webkit-border-top-right-radius: 20px;
+   -moz-border-radius-topleft: 20px;
+   -webkit-border-top-left-radius: 20px;
+   -moz-border-radius-bottomright: 20px;
+   -webkit-border-bottom-right-radius: 20px;
+   -moz-border-radius-bottomleft: 20px;
+   -webkit-border-bottom-left-radius: 20px;
+
+}
+
+#nrm {
+
+   color: black;
+   display: table-cell;
+   font-family: 'Source Code Pro', monospace;
+   width: 50%;
+   margin-bottom: 50px;
+
+
+}
+#info {
+   margin-left: 40px;
+   margin-right: 40px;
+   margin-bottom: 5px;
+   margin-top: 30px;
+}
+
+p {
+   margin-left: 20px;
+   margin-right: 20px;
+   margin-bottom: 30px;
+   text-align: justify;
+   font-family: 'Source Code Pro', monospace;
+   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+#logo {
+   vertical-align: middle;
+   text-align: middle;
+   padding-left: 80px;
+}
+
+#player {
+   -moz-border-radius-topright: 20px;
+   -webkit-border-top-right-radius: 20px;
+   -moz-border-radius-topleft: 20px;
+   -webkit-border-top-left-radius: 20px;
+   -moz-border-radius-topright: 20px;
+   -webkit-border-top-right-radius: 20px;
+   -moz-border-radius-topleft: 20px;
+   -webkit-border-top-left-radius: 20px;
+   -moz-border-radius-bottomright: 20px;
+   -webkit-border-bottom-right-radius: 20px;
+   -moz-border-radius-bottomleft: 20px;
+   -webkit-border-bottom-left-radius: 20px;
+   -moz-border-radius-topright: 20px;
+   -webkit-border-top-right-radius: 20px;
+   -moz-border-radius-topleft: 20px;
+   -webkit-border-top-left-radius: 20px;
+   -moz-border-radius-bottomright: 20px;
+   -webkit-border-bottom-right-radius: 20px;
+   -moz-border-radius-bottomleft: 20px;
+   -webkit-border-bottom-left-radius: 20px;
+   position: absolute;
+   left: 50%;
+   /* this is half the height of your div*/
+   margin-left: -360px;
+   margin-top: -10px;
+   width: 720px;
+   /* or whatever width you want. */
+   max-width: 720px;
+   /* or whatever width you want. */
+   content: ‘’;
+   background: rgba(200, 220, 210, 0.2);
+   box-shadow: 2px 2px 50px rgba(0, 0, 0, .2);
+}
+
+#ltext {
+   font-size: 14px;
+}
+
+#bg2 {
+   background-color: #f2f2f2;
+}
+
+#credits {
+   border-radius: 1px;
+   text-align: center;
+   font-family: 'Source Code Pro', monospace;
+   color: white;
+   font-size: 12px;
+   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+   border-radius: 1px;
+   text-align: center;
+   font-family: "Source Code Pro", monospace;
+   color: white;
+   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+   font-size: 36px;
+   margin-top: 50px;
+}
+
+h2 {
+   color: black;
+   text-align: center;
+   font-family: 'Source Code Pro', monospace;
+   font-size: 26px;
+   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+   margin-bottom: -35px;
+}
+
+button {
+   background-color: white;
+   border: none;
+   margin: 0 auto;
+   width: 757px;
+   height: 25px;
+   font-Size: 14px;
+   display: block;
+   font-family: 'Source Code Pro', monospace;
+   text-align: center;
+   cursor: pointer;
+}
+
+button:hover {
+   background-color: rgba(200, 220, 210, 0.8);
+   color: black;
+}
+
+.btn {
+   -moz-border-radius-topright: 8px;
+   -webkit-border-top-right-radius: 8px;
+   -moz-border-radius-topleft: 8px;
+   -webkit-border-top-left-radius: 8px;
+}
+
+.btn_u {
+   -moz-border-radius-topright: 8px;
+   -webkit-border-top-right-radius: 8px;
+   -moz-border-radius-topleft: 8px;
+   -webkit-border-top-left-radius: 8px;
+}
+
+.btn_d {
+   -moz-border-radius-bottomright: 8px;
+   -webkit-border-bottom-right-radius: 8px;
+   -moz-border-radius-bottomleft: 8px;
+   -webkit-border-bottom-left-radius: 8px;
+}
+
+.btn_b {
+   -moz-border-radius-topright: 8px;
+   -webkit-border-top-right-radius: 8px;
+   -moz-border-radius-topleft: 8px;
+   -webkit-border-top-left-radius: 8px;
+   -moz-border-radius-bottomright: 8px;
+   -webkit-border-bottom-right-radius: 8px;
+   -moz-border-radius-bottomleft: 8px;
+   -webkit-border-bottom-left-radius: 8px;
+}
+
+body {
+   background-image: url(Images/KART5AWP_blur.png);
+}
+
+ul:before {
+   content: ‘’;
+   background: rgba(150, 255, 200, 0);
+   -webkit-filter: blur(5px);
+   -moz-filter: blur(5px);
+   -o-filter: blur(5px);
+   -ms-filter: blur(5px);
+   filter: blur(5px);
+   box-shadow: inset 0 0 0 200px rgba(255, 255, 255, 0.3);
+   filter: blur(10px);
+}
+
+ul {
+   list-style-type: none;
+   margin: 0;
+   padding: 0;
+   overflow: hidden;
+   background-color: rgba(200, 220, 210, 0.5);
+   -moz-border-radius-topright: 8px;
+   -webkit-border-top-right-radius: 8px;
+   -moz-border-radius-topleft: 8px;
+   -webkit-border-top-left-radius: 8px;
+   -moz-border-radius-bottomright: 8px;
+   -webkit-border-bottom-right-radius: 8px;
+   -moz-border-radius-bottomleft: 8px;
+   -webkit-border-bottom-left-radius: 8px;
+   box-shadow: 1px 2px 30px rgba(0, 0, 0, .2);
+}
+
+li {
+   float: left;
+}
+
+li a {
+   display: block;
+   color: black;
+   text-align: center;
+   font-family: 'Source Code Pro', monospace;
+   padding: 14px 16px;
+   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+   text-decoration: none;
+}
+
+li a:hover:not(.active) {
+   background-color: rgba(200, 220, 210, 0.8);
+}
+
+.active {
+   background-color: #f2f2f2;
+}
