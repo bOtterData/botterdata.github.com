@@ -349,7 +349,7 @@ function Chart(_address) {
     yksikkö = "kpl";
   }
   if (_address == "Ryhmäpelit") {
-    address = 'data[id]["game_ryhmäpeli"]["games"]';
+    address = 'data[id]["3äpeli"]["games"]';
     yksikkö = "kpl";
   }
   if (_address == "Harpoon-Pelit") {
@@ -630,7 +630,7 @@ function OverAll() {
     ["Kaikki Tölkit", "kpl", es_t],
     ["Kultaiset Harpuunat", "kpl", harpoons],
     ["Valaankasvattajat", "kpl", valaank],
-    ["Season 2 alkoi", "", "30.8.2018"]
+    ["Season 3 alkoi", "", "30.10.2018"]
   ];
 
   let space = floor((height - top_bar - bottom_bar) / items.length);
