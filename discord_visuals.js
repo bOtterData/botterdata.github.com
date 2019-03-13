@@ -1,4 +1,5 @@
 // FIREBASEN SETTIÄ
+
 var config = {
   "apiKey": "AIzaSyCRlwc_0YwgbeY12i9Bhe3oIcCHwyJbcm8",
   "authDomain": "botter-bot.firebaseapp.com",
@@ -13,7 +14,7 @@ firebase.initializeApp(config);
 let data = {};
 let font;
 var database = firebase.database();
-var ref = database.ref('profiles');
+var ref = database.ref('users');
 
 let buttons1 = [];
 let buttons = [];
@@ -32,11 +33,12 @@ function preload() {
 function setup() {
   textFont(font);
 
-  createCanvas(1100, 900);
-  frameRate(60);
+  var canvas = createCanvas(1100, 900);
+  canvas.parent('sketch-holder');
+  frameRate(25);
 
 
-  var labels = ["Rahat", "Aktiivisuus", "Peak", "Perustulo", "ES", "Tyhjät ES", "Annetut", "Saadut"];
+  var labels = ["Rahat", "Aktiivisuus", "Peak", "Perustulo", "ES", "Tyhjät ES", "Varastetut", "Muut var."];
 
   var count = 0;
   var x = 20;
@@ -99,7 +101,6 @@ function setup() {
 }
 
 function draw() {
-  frameRate(60);
   background(45);
 
   if (frameCount < 120) {
@@ -110,7 +111,7 @@ function draw() {
     chart[0].create();
   }
 
-  if (frameCount % 30 == 0) {
+  if (frameCount % 48 == 0) {
     for (let c of chart) {
       c.update();
     }
@@ -308,119 +309,119 @@ function Chart(_address) {
   let lenitems = 0;
 
   if (_address == "rahat") {
-    address = 'data[id]["omistus"]["rahat"]';
+    address = 'data[id]["inventory"]["money"]';
     yksikkö = "coins";
   }
   if (_address == "aktiivisuus") {
-    address = 'data[id]["aika_kannuilla"]';
+    address = 'data[id]["basic_statistics"]["minutes_on_channel"]';
     yksikkö = "mins";
   }
   if (_address == "peak") {
-    address = 'data[id]["omistus"]["maxrahat"]';
+    address = 'data[id]["basic_statistics"]["peak_money"]';
     yksikkö = "coins";
   }
   if (_address == "perustulo") {
-    address = 'data[id]["omistus"]["perustulo"]';
+    address = 'data[id]["inventory"]["income"]';
     yksikkö = "coins / min";
   }
   if (_address == "es") {
-    address = 'data[id]["omistus"]["ES"]';
+    address = 'data[id]["inventory"]["items"]["ES"]';
     yksikkö = "ES";
   }
   if (_address == "tyhjät") {
-    address = 'data[id]["omistus"]["ES_tyhjät"]';
+    address = 'data[id]["inventory"]["items"]["ES_can"]';
     yksikkö = "tölkit";
   }
-  if (_address == "annetut") {
-    address = 'data[id]["omistus"]["annetut_rahat"]';
+  if (_address == "money_stolen") {
+    address = 'data[id]["basic_statistics"]["money_stolen"]';
     yksikkö = "coins";
   }
-  if (_address == "saadut") {
-    address = 'data[id]["omistus"]["saadut_rahat"]';
+  if (_address == "money_stolen_from_you") {
+    address = 'data[id]["basic_statistics"]["money_stolen_from_you"]';
     yksikkö = "coins";
   }
   if (_address == "Slot-Pelit") {
-    address = 'data[id]["pelit"]["slot_pelit"]';
+    address = 'data[id]["game_slot"]["games"]';
     yksikkö = "kpl";
   }
   if (_address == "KTEM-Pelit") {
-    address = 'data[id]["pelit"]["KTEM_pelit"]';
+    address = 'data[id]["game_KTEM"]["games"]';
     yksikkö = "kpl";
   }
   if (_address == "Ryhmäpelit") {
-    address = 'data[id]["pelit"]["ryhmäpelit"]';
+    address = 'data[id]["game_ryhmäpeli"]["games"]';
     yksikkö = "kpl";
   }
   if (_address == "Harpoon-Pelit") {
-    address = 'data[id]["pelit"]["harpoon_pelit"]';
+    address = 'data[id]["game_harpoon"]["games"]';
     yksikkö = "kpl";
   }
   if (_address == "Harpoon-Accuracy") {
-    address = '(data[id]["pelit"]["harpoon_osumat"] * 100 / (data[id]["pelit"]["harpoon_pelit"] + 0.0000000001)).toFixed(2)';
+    address = '(data[id]["game_harpoon"]["hits"] * 100 / (data[id]["game_harpoon"]["games"] + 0.0000000001)).toFixed(2)';
     yksikkö = "%";
   }
   if (_address == "Slot Voitetut") {
-    address = 'data[id]["pelit"]["slot_voitot_yhteensä"]';
+    address = 'data[id]["game_slot"]["money_won"]';
     yksikkö = "coins";
   }
   if (_address == "KTEM-Voitot") {
-    address = 'data[id]["pelit"]["KTEM_voitot"]';
+    address = 'data[id]["game_KTEM"]["money_won"]';
     yksikkö = "coins";
   }
   if (_address == "Ryhmäpeli W%") {
-    address = '(data[id]["pelit"]["ryhmäpelivoitot"] * 100 / (data[id]["pelit"]["ryhmäpelit"] + 0.000001)).toFixed(2)';
+    address = '(data[id]["game_ryhmäpeli"]["games_won"] * 100 / (data[id]["game_ryhmäpeli"]["games"] + 0.000001)).toFixed(2)';
     yksikkö = "%";
   }
   if (_address == "Harpoon-Osumat") {
-    address = 'data[id]["pelit"]["harpoon_osumat"]';
+    address = 'data[id]["game_harpoon"]["hits"]';
     yksikkö = "kpl";
   }
   if (_address == "Harpoon-Voitot") {
-    address = 'data[id]["pelit"]["harpoon_voitetut"]';
+    address = 'data[id]["game_harpoon"]["games_won"]';
     yksikkö = "coins";
   }
   if (_address == "KTEM-Netto") {
-    address = 'data[id]["pelit"]["KTEM_voitot"] - data[id]["pelit"]["KTEM_häviöt"]';
+    address = 'data[id]["game_KTEM"]["money_won"] - data[id]["game_KTEM"]["money_lost"]';
     yksikkö = "coins";
   }
   if (_address == "KTEM-Häviöt") {
-    address = 'data[id]["pelit"]["KTEM_häviöt"]';
+    address = 'data[id]["game_KTEM"]["money_lost"]';
     yksikkö = "coins";
   }
   if (_address == "Ryhmäpelinetto") {
-    address = 'data[id]["pelit"]["ryhmäpelivoitot_yht"] - data[id]["pelit"]["ryhmäpelihäviöt_yht"]';
+    address = 'data[id]["game_ryhmäpeli"]["money_won"] - data[id]["game_ryhmäpeli"]["money_lost"]';
     yksikkö = "coins";
   }
   if (_address == "Harpoon-Netto") {
-    address = 'data[id]["pelit"]["harpoon_voitetut"] - data[id]["pelit"]["harpoon_hävityt"]';
+    address = 'data[id]["game_harpoon"]["money_won"] - data[id]["game_harpoon"]["money_lost"]';
     yksikkö = "coins";
   }
   if (_address == "Harpoon-Hävityt") {
-    address = 'data[id]["pelit"]["harpoon_hävityt"]';
+    address = 'data[id]["game_harpoon"]["money_lost"]';
     yksikkö = "coins";
   }
   if (_address == "Slot Häviöt") {
-    address = 'data[id]["pelit"]["slot_häviöt_yhteensä"]';
+    address = 'data[id]["game_slot"]["money_lost"]';
     yksikkö = "coins";
   }
   if (_address == "Slot-Netto") {
-    address = 'data[id]["pelit"]["slot_voitot_yhteensä"] - data[id]["pelit"]["slot_häviöt_yhteensä"]';
+    address = 'data[id]["game_slot"]["money_won"] - data[id]["game_slot"]["money_lost"]';
     yksikkö = "coins";
   }
   if (_address == "BJ-Pelit") {
-    address = 'data[id]["pelit"]["BJ_pelit"]';
+    address = 'data[id]["game_blackjack"]["games"]';
     yksikkö = "kpl";
   }
   if (_address == "BJ-Voitot") {
-    address = 'data[id]["pelit"]["BJ_voitetut_rahat"]';
+    address = 'data[id]["game_blackjack"]["money_won"]';
     yksikkö = "coins";
   }
   if (_address == "BJ-Häviöt") {
-    address = 'data[id]["pelit"]["BJ_hävityt_rahat"]';
+    address = 'data[id]["game_blackjack"]["money_lost"]';
     yksikkö = "coins";
   }
   if (_address == "BJ-Netto") {
-    address = 'data[id]["pelit"]["BJ_voitetut_rahat"] - data[id]["pelit"]["BJ_hävityt_rahat"]';
+    address = 'data[id]["game_blackjack"]["money_won"] - data[id]["game_blackjack"]["money_lost"]';
     yksikkö = "coins";
   }
 
@@ -478,7 +479,7 @@ if (id == "dj") continue;
         _c1 = [255, 60, 60];
       }
 
-      _name = data[i[0]]["nimi"];
+      _name = data[i[0]]["name"];
 
       bars[i[0]].set(_x, _y, _w, _h, _c1, _c2, _value, _name);
 
@@ -542,7 +543,7 @@ if (id == "dj") continue;
       if (_value < 0) {
         _c1 = [255, 60, 60];
       }
-      _name = data[i[0]]["nimi"];
+      _name = data[i[0]]["name"];
 
       bars[i[0]].set(_x, _y, _w, _h, _c1, _c2, _value, _name);
 
@@ -569,7 +570,7 @@ function OverAll() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    all_money += data[id]["omistus"]["rahat"];
+    all_money += data[id]["inventory"]["money"];
   }
 
   // Kaikki minuutit
@@ -578,7 +579,7 @@ function OverAll() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    minutes += data[id]["aika_kannuilla"];
+    minutes += data[id]["basic_statistics"]["minutes_on_channel"];
   }
   minutes = minutes + " mins (" + (minutes/60).toFixed(2) + " h)";
 
@@ -588,7 +589,7 @@ function OverAll() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    es += data[id]["omistus"]["ES"];
+    es += data[id]["inventory"]["items"]["ES"];
   }
 
   // Juodut ES
@@ -597,7 +598,7 @@ function OverAll() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    es_t += data[id]["omistus"]["ES_tyhjät"];
+    es_t += data[id]["inventory"]["items"]["ES_can"];
   }
 
   // Harpuunat
@@ -606,7 +607,7 @@ function OverAll() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    if (data[id]["omistus"]["kultainen_harppuuna"]) {
+    if (data[id]["inventory"]["key_items"]["golden_harpoon"]) {
       harpoons += 1;
     }
   }
@@ -617,7 +618,7 @@ function OverAll() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    if (data[id]["omistus"]["valaankasvatusohjelma"]) {
+    if (data[id]["inventory"]["key_items"]["whale_breeding_program"]) {
       valaank += 1;
     }
   }
@@ -667,7 +668,7 @@ function OverAll() {
       if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-      all_money += data[id]["omistus"]["rahat"];
+      all_money += data[id]["inventory"]["money"];
     }
 
     // Kaikki minuutit
@@ -676,7 +677,7 @@ function OverAll() {
       if (id == "date") continue;
       if (id == "deck") continue;
       if (id == "dj") continue;
-      minutes += data[id]["aika_kannuilla"];
+      minutes += data[id]["basic_statistics"]["minutes_on_channel"];
     }
     minutes = minutes + " mins (" + (minutes/60).toFixed(2) + " h)";
 
@@ -686,7 +687,7 @@ function OverAll() {
       if (id == "date") continue;
       if (id == "deck") continue;
       if (id == "dj") continue;
-      es += data[id]["omistus"]["ES"];
+      es += data[id]["inventory"]["items"]["ES"];
     }
 
     // Juodut ES
@@ -695,7 +696,7 @@ function OverAll() {
       if (id == "date") continue;
       if (id == "deck") continue;
       if (id == "dj") continue;
-      es_t += data[id]["omistus"]["ES_tyhjät"];
+      es_t += data[id]["inventory"]["items"]["ES_can"];
     }
 
     // Harpuunat
@@ -704,7 +705,7 @@ function OverAll() {
       if (id == "date") continue;
       if (id == "deck") continue;
       if (id == "dj") continue;
-      if (data[id]["omistus"]["kultainen_harppuuna"]) {
+      if (data[id]["inventory"]["key_items"]["golden_harpoon"]) {
         harpoons += 1;
       }
     }
@@ -781,10 +782,10 @@ function OverAllGames() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-        all_wins += data[id]["pelit"]["slot_voitot_yhteensä"];
-        all_wins += data[id]["pelit"]["KTEM_voitot"];
-        all_wins += data[id]["pelit"]["harpoon_voitetut"];
-        all_wins += data[id]["pelit"]["BJ_voitetut_rahat"];
+        all_wins += data[id]["game_slot"]["money_won"];
+        all_wins += data[id]["game_KTEM"]["money_won"];
+        all_wins += data[id]["game_harpoon"]["money_won"];
+        all_wins += data[id]["game_blackjack"]["money_won"];
   }
 
   // Kaikki häviöt
@@ -793,10 +794,10 @@ function OverAllGames() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    all_loses += data[id]["pelit"]["slot_häviöt_yhteensä"];
-    all_loses += data[id]["pelit"]["KTEM_häviöt"];
-    all_loses += data[id]["pelit"]["harpoon_hävityt"];
-    all_loses += data[id]["pelit"]["BJ_hävityt_rahat"];
+    all_loses += data[id]["game_slot"]["money_lost"];
+    all_loses += data[id]["game_KTEM"]["money_lost"];
+    all_loses += data[id]["game_harpoon"]["money_lost"];
+    all_loses += data[id]["game_blackjack"]["money_lost"];
   }
 
   let all_wins_h = 0;
@@ -804,7 +805,7 @@ function OverAllGames() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    all_wins_h += data[id]["pelit"]["harpoon_voitetut"];
+    all_wins_h += data[id]["game_harpoon"]["games_won"];
   }
 
   let all_wins_k = 0;
@@ -812,7 +813,7 @@ function OverAllGames() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    all_wins_k += data[id]["pelit"]["KTEM_voitot"];
+    all_wins_k += data[id]["game_KTEM"]["games_won"];
   }
 
   let all_wins_s = 0;
@@ -820,7 +821,7 @@ function OverAllGames() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    all_wins_s += data[id]["pelit"]["slot_voitot_yhteensä"];
+    all_wins_s += data[id]["game_harpoon"]["games_won"];
   }
 
   let all_wins_b = 0;
@@ -828,8 +829,9 @@ function OverAllGames() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    all_wins_b += data[id]["pelit"]["BJ_voitetut_rahat"];
+    all_wins_b += data[id]["game_blackjack"]["games_won"];
   }
+
 
   // Netto
   let netto = all_wins - all_loses;
@@ -888,10 +890,10 @@ function OverAllGames() {
       if (id == "date") continue;
       if (id == "deck") continue;
       if (id == "dj") continue;
-      all_wins += data[id]["pelit"]["slot_voitot_yhteensä"];
-      all_wins += data[id]["pelit"]["KTEM_voitot"];
-      all_wins += data[id]["pelit"]["harpoon_voitetut"];
-      all_wins += data[id]["pelit"]["BJ_voitetut_rahat"];
+          all_wins += data[id]["game_slot"]["money_won"];
+          all_wins += data[id]["game_KTEM"]["money_won"];
+          all_wins += data[id]["game_harpoon"]["money_won"];
+          all_wins += data[id]["game_blackjack"]["money_won"];
     }
 
     // Kaikki häviöt
@@ -900,10 +902,10 @@ function OverAllGames() {
       if (id == "date") continue;
       if (id == "deck") continue;
       if (id == "dj") continue;
-      all_loses += data[id]["pelit"]["slot_häviöt_yhteensä"];
-      all_loses += data[id]["pelit"]["KTEM_häviöt"];
-      all_loses += data[id]["pelit"]["harpoon_hävityt"];
-      all_loses += data[id]["pelit"]["BJ_hävityt_rahat"];
+      all_loses += data[id]["game_slot"]["money_lost"];
+      all_loses += data[id]["game_KTEM"]["money_lost"];
+      all_loses += data[id]["game_harpoon"]["money_lost"];
+      all_loses += data[id]["game_blackjack"]["money_lost"];
     }
 
     let all_wins_h = 0;
@@ -911,7 +913,7 @@ function OverAllGames() {
       if (id == "date") continue;
       if (id == "deck") continue;
       if (id == "dj") continue;
-      all_wins_h += data[id]["pelit"]["harpoon_voitetut"];
+      all_wins_h += data[id]["game_harpoon"]["games_won"];
     }
 
     let all_wins_k = 0;
@@ -919,7 +921,7 @@ function OverAllGames() {
       if (id == "date") continue;
       if (id == "deck") continue;
       if (id == "dj") continue;
-      all_wins_k += data[id]["pelit"]["KTEM_voitot"];
+      all_wins_k += data[id]["game_KTEM"]["games_won"];
     }
 
     let all_wins_s = 0;
@@ -927,7 +929,7 @@ function OverAllGames() {
       if (id == "date") continue;
       if (id == "deck") continue;
       if (id == "dj") continue;
-      all_wins_s += data[id]["pelit"]["slot_voitot_yhteensä"];
+      all_wins_s += data[id]["game_harpoon"]["games_won"];
     }
 
     let all_wins_b = 0;
@@ -935,7 +937,7 @@ function OverAllGames() {
       if (id == "date") continue;
       if (id == "deck") continue;
       if (id == "dj") continue;
-      all_wins_b += data[id]["pelit"]["BJ_voitetut_rahat"];
+      all_wins_b += data[id]["game_blackjack"]["games_won"];
     }
 
     // Netto
@@ -999,7 +1001,7 @@ function SlotChart() {
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_wins1 += data[id]["pelit"]["slot_voitot_yhteensä"];
+    all_wins1 += data[id]["game_slot"]["money_won"];
   }
 
   // Kaikki häviöt
@@ -1008,7 +1010,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_loses1 += data[id]["pelit"]["slot_häviöt_yhteensä"];
+    all_loses1 += data[id]["game_slot"]["money_lost"];
   }
 
   // Kaikki pelit
@@ -1017,7 +1019,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_games1 += data[id]["pelit"]["slot_pelit"];
+    all_games1 += data[id]["game_slot"]["games"];
   }
 
   // Netto
@@ -1030,7 +1032,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    poggers3 += data[id]["pelit"]["slot_yksittäisvoitot"]["poggers3"];
+    poggers3 += data[id]["game_slot"]["wins"]["poggers3"];
   }
 
   let poggers2 = 0;
@@ -1038,7 +1040,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    poggers2 += data[id]["pelit"]["slot_yksittäisvoitot"]["poggers2"];
+    poggers2 += data[id]["game_slot"]["wins"]["poggers2"];
   }
 
   let poggers1 = 0;
@@ -1046,7 +1048,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    poggers1 += data[id]["pelit"]["slot_yksittäisvoitot"]["poggers1"];
+    poggers1 += data[id]["game_slot"]["wins"]["poggers1"];
   }
 
   let sasu = 0;
@@ -1054,7 +1056,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    sasu += data[id]["pelit"]["slot_yksittäisvoitot"]["sasu"];
+    sasu += data[id]["game_slot"]["wins"]["sasu"];
   }
 
   let karvis = 0;
@@ -1062,7 +1064,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    karvis += data[id]["pelit"]["slot_yksittäisvoitot"]["karvis"];
+    karvis += data[id]["game_slot"]["wins"]["karvis"];
   }
 
   let alfa = 0;
@@ -1070,7 +1072,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    alfa += data[id]["pelit"]["slot_yksittäisvoitot"]["alfa"];
+    alfa += data[id]["game_slot"]["wins"]["alfa"];
   }
 
   let meloni = 0;
@@ -1078,7 +1080,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    meloni += data[id]["pelit"]["slot_yksittäisvoitot"]["meloni"];
+    meloni += data[id]["game_slot"]["wins"]["jesilmero"];
   }
 
 
@@ -1131,7 +1133,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      all_wins1 += data[id]["pelit"]["slot_voitot_yhteensä"];
+      all_wins1 += data[id]["game_slot"]["money_won"];
     }
 
     // Kaikki häviöt
@@ -1140,7 +1142,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      all_loses1 += data[id]["pelit"]["slot_häviöt_yhteensä"];
+      all_loses1 += data[id]["game_slot"]["money_lost"];
     }
 
     // Kaikki pelit
@@ -1149,7 +1151,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      all_games1 += data[id]["pelit"]["slot_pelit"];
+      all_games1 += data[id]["game_slot"]["games"];
     }
 
     // Netto
@@ -1162,7 +1164,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      poggers3 += data[id]["pelit"]["slot_yksittäisvoitot"]["poggers3"];
+      poggers3 += data[id]["game_slot"]["wins"]["poggers3"];
     }
 
     let poggers2 = 0;
@@ -1170,7 +1172,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      poggers2 += data[id]["pelit"]["slot_yksittäisvoitot"]["poggers2"];
+      poggers2 += data[id]["game_slot"]["wins"]["poggers2"];
     }
 
     let poggers1 = 0;
@@ -1178,7 +1180,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      poggers1 += data[id]["pelit"]["slot_yksittäisvoitot"]["poggers1"];
+      poggers1 += data[id]["game_slot"]["wins"]["poggers1"];
     }
 
     let sasu = 0;
@@ -1186,7 +1188,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      sasu += data[id]["pelit"]["slot_yksittäisvoitot"]["sasu"];
+      sasu += data[id]["game_slot"]["wins"]["sasu"];
     }
 
     let karvis = 0;
@@ -1194,7 +1196,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      karvis += data[id]["pelit"]["slot_yksittäisvoitot"]["karvis"];
+      karvis += data[id]["game_slot"]["wins"]["karvis"];
     }
 
     let alfa = 0;
@@ -1202,7 +1204,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      alfa += data[id]["pelit"]["slot_yksittäisvoitot"]["alfa"];
+      alfa += data[id]["game_slot"]["wins"]["alfa"];
     }
 
     let meloni = 0;
@@ -1210,7 +1212,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      meloni += data[id]["pelit"]["slot_yksittäisvoitot"]["meloni"];
+      meloni += data[id]["game_slot"]["wins"]["jesilmero"];
     }
 
     let items = [
@@ -1270,7 +1272,7 @@ function KTEMChart() {
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_wins2 += data[id]["pelit"]["KTEM_voitot"];
+    all_wins2 += data[id]["game_KTEM"]["money_won"];
   }
 
   // Kaikki häviöt
@@ -1279,7 +1281,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_loses2 += data[id]["pelit"]["KTEM_häviöt"];
+    all_loses2 += data[id]["game_KTEM"]["money_lost"];
   }
 
   // Kaikki pelit
@@ -1288,7 +1290,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_games2 += data[id]["pelit"]["KTEM_voitetut_pelit"];
+    all_games2 += data[id]["game_KTEM"]["games_won"];
   }
 
   // Netto
@@ -1341,7 +1343,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      all_wins2 += data[id]["pelit"]["KTEM_voitot"];
+      all_wins2 += data[id]["game_KTEM"]["money_won"];
     }
 
     // Kaikki häviöt
@@ -1350,7 +1352,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      all_loses2 += data[id]["pelit"]["KTEM_häviöt"];
+      all_loses2 += data[id]["game_KTEM"]["money_lost"];
     }
 
     // Kaikki pelit
@@ -1359,7 +1361,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      all_games2 += data[id]["pelit"]["KTEM_voitetut_pelit"];
+      all_games2 += data[id]["game_KTEM"]["games_won"];
     }
 
     // Netto
@@ -1421,7 +1423,7 @@ function BJChart() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    all_wins6 += data[id]["pelit"]["BJ_voitetut_rahat"];
+    all_wins6 += data[id]["game_blackjack"]["money_won"];
   }
 
   // Kaikki häviöt
@@ -1430,7 +1432,7 @@ function BJChart() {
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_loses6 += data[id]["pelit"]["BJ_hävityt_rahat"];
+    all_loses6 += data[id]["game_blackjack"]["money_lost"];
   }
 
   // Kaikki pelit
@@ -1439,7 +1441,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_games6 += data[id]["pelit"]["BJ_pelit"];
+    all_games6 += data[id]["game_blackjack"]["games"];
   }
 
   // Kaikki pelit
@@ -1448,7 +1450,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_panos += data[id]["pelit"]["BJ_panokset"];
+    all_panos += data[id]["game_blackjack"]["all_bets"];
   }
 
   // Kaikki pelit
@@ -1457,7 +1459,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    kortit += data[id]["pelit"]["kortteja_pelannut"];
+    kortit += data[id]["game_blackjack"]["cards_played"];
   }
 
   // Kaikki pelit
@@ -1466,7 +1468,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    k1 += data[id]["pelit"]["BJ_21"];
+    k1 += data[id]["game_blackjack"]["21"];
   }
 
   // Kaikki pelit
@@ -1475,7 +1477,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    hit += data[id]["pelit"]["BJ_hit"];
+    hit += data[id]["game_blackjack"]["hit"];
   }
 
   // Kaikki pelit
@@ -1484,7 +1486,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    hit += data[id]["pelit"]["BJ_double"];
+    double += data[id]["game_blackjack"]["double"];
   }
   // Kaikki pelit
   let stand = 0;
@@ -1492,7 +1494,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    hit += data[id]["pelit"]["BJ_stand"];
+    stand += data[id]["game_blackjack"]["stand"];
   }
   // Kaikki pelit
   let all_wins_g6 = 0;
@@ -1500,7 +1502,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_wins_g6 += data[id]["pelit"]["BJ_voitetut_pelit"];
+    all_wins_g6 += data[id]["game_blackjack"]["games_won"];
   }
 
   // Kaikki pelit
@@ -1509,7 +1511,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_loses_g6 += data[id]["pelit"]["BJ_hävityt_pelit"];
+    all_loses_g6 += data[id]["game_blackjack"]["games_lost"];
   }
 
   // Netto
@@ -1570,7 +1572,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
       if (id == "deck") continue;
       if (id == "dj") continue;
-      all_wins6 += data[id]["pelit"]["BJ_voitetut_rahat"];
+      all_wins6 += data[id]["game_blackjack"]["money_won"];
     }
 
     // Kaikki häviöt
@@ -1579,7 +1581,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
   if (id == "deck") continue;
   if (id == "dj") continue;
-      all_loses6 += data[id]["pelit"]["BJ_hävityt_rahat"];
+      all_loses6 += data[id]["game_blackjack"]["money_lost"];
     }
 
     // Kaikki pelit
@@ -1588,7 +1590,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
   if (id == "deck") continue;
   if (id == "dj") continue;
-      all_games6 += data[id]["pelit"]["BJ_pelit"];
+      all_games6 += data[id]["game_blackjack"]["games"];
     }
 
     // Kaikki pelit
@@ -1597,7 +1599,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
   if (id == "deck") continue;
   if (id == "dj") continue;
-      all_panos += data[id]["pelit"]["BJ_panokset"];
+      all_panos += data[id]["game_blackjack"]["all_bets"];
     }
 
     // Kaikki pelit
@@ -1606,7 +1608,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
   if (id == "deck") continue;
   if (id == "dj") continue;
-      kortit += data[id]["pelit"]["kortteja_pelannut"];
+      kortit += data[id]["game_blackjack"]["cards_played"];
     }
 
     // Kaikki pelit
@@ -1615,7 +1617,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
   if (id == "deck") continue;
   if (id == "dj") continue;
-      k1 += data[id]["pelit"]["BJ_21"];
+      k1 += data[id]["game_blackjack"]["21"];
     }
 
     // Kaikki pelit
@@ -1624,7 +1626,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
   if (id == "deck") continue;
   if (id == "dj") continue;
-      hit += data[id]["pelit"]["BJ_hit"];
+      hit += data[id]["game_blackjack"]["hit"];
     }
 
     // Kaikki pelit
@@ -1633,7 +1635,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
   if (id == "deck") continue;
   if (id == "dj") continue;
-      double += data[id]["pelit"]["BJ_double"];
+      double += data[id]["game_blackjack"]["double"];
     }
     // Kaikki pelit
     let stand = 0;
@@ -1641,7 +1643,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
   if (id == "deck") continue;
   if (id == "dj") continue;
-      stand += data[id]["pelit"]["BJ_stand"];
+      stand += data[id]["game_blackjack"]["stand"];
     }
     // Kaikki pelit
     let all_wins_g6 = 0;
@@ -1649,7 +1651,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
   if (id == "deck") continue;
   if (id == "dj") continue;
-      all_wins_g6 += data[id]["pelit"]["BJ_voitetut_pelit"];
+      all_wins_g6 += data[id]["game_blackjack"]["games_won"];
     }
 
     // Kaikki pelit
@@ -1658,7 +1660,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
   if (id == "deck") continue;
   if (id == "dj") continue;
-      all_loses_g6 += data[id]["pelit"]["BJ_hävityt_pelit"];
+      all_loses_g6 += data[id]["game_blackjack"]["games_lost"];
     }
 
     // Netto
@@ -1728,7 +1730,7 @@ function HarpoonChart() {
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_wins3 += data[id]["pelit"]["harpoon_voitetut"];
+    all_wins3 += data[id]["game_harpoon"]["games_won"];
   }
 
   // Kaikki häviöt
@@ -1737,7 +1739,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_loses3 += data[id]["pelit"]["harpoon_hävityt"];
+    all_loses3 += data[id]["game_harpoon"]["games_lost"];
   }
 
   // Kaikki pelit
@@ -1746,7 +1748,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_games3 += data[id]["pelit"]["harpoon_pelit"];
+    all_games3 += data[id]["game_harpoon"]["games"];
   }
 
   // Kaikki pelit
@@ -1755,7 +1757,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_hits += data[id]["pelit"]["harpoon_osumat"];
+    all_hits += data[id]["game_harpoon"]["hits"];
   }
 
   // Netto
@@ -1773,7 +1775,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    hait += data[id]["pelit"]["harpoon_yksittäiset"]["harpoon_hai"];
+    hait += data[id]["game_harpoon"]["targets"]["shark"];
   }
 
   // Kaikki pelit
@@ -1782,7 +1784,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    pallot += data[id]["pelit"]["harpoon_yksittäiset"]["harpoon_pallo"];
+    pallot += data[id]["game_harpoon"]["targets"]["balloon"];
   }
 
   // Kaikki pelit
@@ -1791,7 +1793,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    valaat += data[id]["pelit"]["harpoon_yksittäiset"]["harpoon_valas"];
+    valaat += data[id]["game_harpoon"]["targets"]["whale"];
   }
 
   let hai_p = (hait * 100 / all_hits).toFixed(2);
@@ -1847,7 +1849,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      all_wins3 += data[id]["pelit"]["harpoon_voitetut"];
+      all_wins3 += data[id]["game_harpoon"]["games_won"];
     }
 
     // Kaikki häviöt
@@ -1856,7 +1858,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      all_loses3 += data[id]["pelit"]["harpoon_hävityt"];
+      all_loses3 += data[id]["game_harpoon"]["games_lost"];
     }
 
     // Kaikki pelit
@@ -1865,7 +1867,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      all_games3 += data[id]["pelit"]["harpoon_pelit"];
+      all_games3 += data[id]["game_harpoon"]["games"];
     }
 
     // Kaikki pelit
@@ -1874,7 +1876,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      all_hits += data[id]["pelit"]["harpoon_osumat"];
+      all_hits += data[id]["game_harpoon"]["hits"];
     }
 
     // Netto
@@ -1892,7 +1894,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      hait += data[id]["pelit"]["harpoon_yksittäiset"]["harpoon_hai"];
+      hait += data[id]["game_harpoon"]["targets"]["shark"];
     }
 
     // Kaikki pelit
@@ -1901,7 +1903,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      pallot += data[id]["pelit"]["harpoon_yksittäiset"]["harpoon_pallo"];
+      pallot += data[id]["game_harpoon"]["targets"]["balloon"];
     }
 
     // Kaikki pelit
@@ -1910,7 +1912,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      valaat += data[id]["pelit"]["harpoon_yksittäiset"]["harpoon_valas"];
+      valaat += data[id]["game_harpoon"]["targets"]["whale"];
     }
 
     let hai_p = (hait * 100 / all_hits).toFixed(2);
@@ -1961,7 +1963,7 @@ if (id == "dj") continue;
 
 function mousePressed() {
 
-  var labels = ["rahat", "aktiivisuus", "peak", "perustulo", "es", "tyhjät", "annetut", "saadut"];
+  var labels = ["rahat", "aktiivisuus", "peak", "perustulo", "es", "tyhjät", "money_stolen", "money_stolen_from_you"];
 
   var count = 0;
   for (let r = 0; r < 2; r++){
