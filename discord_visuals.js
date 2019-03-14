@@ -805,7 +805,7 @@ function OverAllGames() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    all_wins_h += data[id]["game_harpoon"]["games_won"];
+    all_wins_h += data[id]["game_harpoon"]["money_won"];
   }
 
   let all_wins_k = 0;
@@ -813,7 +813,7 @@ function OverAllGames() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    all_wins_k += data[id]["game_KTEM"]["games_won"];
+    all_wins_k += data[id]["game_KTEM"]["money_won"];
   }
 
   let all_wins_s = 0;
@@ -821,7 +821,7 @@ function OverAllGames() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    all_wins_s += data[id]["game_harpoon"]["games_won"];
+    all_wins_s += data[id]["game_harpoon"]["money_won"];
   }
 
   let all_wins_b = 0;
@@ -829,7 +829,7 @@ function OverAllGames() {
     if (id == "date") continue;
     if (id == "deck") continue;
     if (id == "dj") continue;
-    all_wins_b += data[id]["game_blackjack"]["games_won"];
+    all_wins_b += data[id]["game_blackjack"]["money_won"];
   }
 
 
@@ -913,7 +913,7 @@ function OverAllGames() {
       if (id == "date") continue;
       if (id == "deck") continue;
       if (id == "dj") continue;
-      all_wins_h += data[id]["game_harpoon"]["games_won"];
+      all_wins_h += data[id]["game_harpoon"]["money_won"];
     }
 
     let all_wins_k = 0;
@@ -921,7 +921,7 @@ function OverAllGames() {
       if (id == "date") continue;
       if (id == "deck") continue;
       if (id == "dj") continue;
-      all_wins_k += data[id]["game_KTEM"]["games_won"];
+      all_wins_k += data[id]["game_KTEM"]["money_won"];
     }
 
     let all_wins_s = 0;
@@ -929,7 +929,7 @@ function OverAllGames() {
       if (id == "date") continue;
       if (id == "deck") continue;
       if (id == "dj") continue;
-      all_wins_s += data[id]["game_harpoon"]["games_won"];
+      all_wins_s += data[id]["game_harpoon"]["money_won"];
     }
 
     let all_wins_b = 0;
@@ -937,7 +937,7 @@ function OverAllGames() {
       if (id == "date") continue;
       if (id == "deck") continue;
       if (id == "dj") continue;
-      all_wins_b += data[id]["game_blackjack"]["games_won"];
+      all_wins_b += data[id]["game_blackjack"]["money_won"];
     }
 
     // Netto
@@ -1730,7 +1730,7 @@ function HarpoonChart() {
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_wins3 += data[id]["game_harpoon"]["games_won"];
+    all_wins3 += data[id]["game_harpoon"]["money_won"];
   }
 
   // Kaikki häviöt
@@ -1739,7 +1739,7 @@ if (id == "dj") continue;
     if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-    all_loses3 += data[id]["game_harpoon"]["games_lost"];
+    all_loses3 += data[id]["game_harpoon"]["money_lost"];
   }
 
   // Kaikki pelit
@@ -1849,7 +1849,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      all_wins3 += data[id]["game_harpoon"]["games_won"];
+      all_wins3 += data[id]["game_harpoon"]["money_won"];
     }
 
     // Kaikki häviöt
@@ -1858,7 +1858,7 @@ if (id == "dj") continue;
       if (id == "date") continue;
 if (id == "deck") continue;
 if (id == "dj") continue;
-      all_loses3 += data[id]["game_harpoon"]["games_lost"];
+      all_loses3 += data[id]["game_harpoon"]["money_lost"];
     }
 
     // Kaikki pelit
