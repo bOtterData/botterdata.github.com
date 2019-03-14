@@ -35,7 +35,7 @@ function setup() {
 
   var canvas = createCanvas(1100, 900);
   canvas.parent('sketch-holder');
-  frameRate(25);
+  frameRate(60);
 
 
   var labels = ["Rahat", "Aktiivisuus", "Peak", "Perustulo", "ES", "Tyhjät ES", "Varastetut", "Muut var."];
@@ -111,7 +111,7 @@ function draw() {
     chart[0].create();
   }
 
-  if (frameCount % 48 == 0) {
+  if (frameCount % 60 * 3 == 0) {
     for (let c of chart) {
       c.update();
     }
